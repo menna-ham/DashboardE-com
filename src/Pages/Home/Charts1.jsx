@@ -70,7 +70,7 @@ const Charts1 = () => {
                 <LineChart className='bg-white' chartTitle={'Revenue'} data={data}/>
             </div>
 
-            <div className="visitors md:col-span-4 bg-white">
+            <div className="visitors md:col-span-4 bg-white rounded-2xl p-4">
                 <PieChart chartTitle='Website Visitor' data={pieData}/>
             </div>
         </div>
