@@ -71,7 +71,7 @@ const Charts1 = () => {
             </div>
 
             <div className="visitors md:col-span-4 bg-white rounded-2xl p-4">
-                <PieChart chartTitle='Website Visitor' data={pieData}/>
+                {/* <PieChart chartTitle='Website Visitor' data={pieData}/> */}
             </div>
         </div>
 

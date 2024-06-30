@@ -30,7 +30,7 @@
 
 // export default PieChart
 
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import ReactECharts from 'echarts-for-react'; 
 
 function PieChart() {
@@ -41,7 +41,9 @@ function PieChart() {
         { value: 5040, name: 'Social' },
       ];
 
-    const chartRef = useRef<EChartsReactCore | null>(null);
+    const chartRef = useRef(null);
+    let [visitorType,setVisitorType] = useState({type:'',name:''})
+    
   const onChartLegendSelectChanged = (name) => {
     if (chartRef.current) {
       const instance = chartRef.current.getEchartsInstance();
@@ -104,49 +106,50 @@ function PieChart() {
       };
 
   return (
-    <div className='bg-white '>
+    <>d</>
+    // <div className='bg-white '>
 
-        <ReactECharts  option={option}/>
+    //     <ReactECharts  option={option}/>
 
-        {Array.isArray(seriesData) &&
-            seriesData.map((dataItem, index) => (
-              <button
-                key={dataItem.name}
-                variant="text"
-                fullWidth
-                onClick={() => {
-                  toggleClicked(dataItem.name );
-                  onChartLegendSelectChanged(dataItem.name );
-                }}
-                sx={{
-                  justifyContent: 'flex-start',
-                  p: 0,
-                  borderRadius: 1,
-                  opacity: visitorType[`${dataItem.name}`] ? 0.5 : 1,
-                }}
-                disableRipple
-              >
-                <Stack direction="row" alignItems="center" gap={1} width={1}>
-                  <Box
-                    sx={{
-                      width: 10,
-                      height: 10,
-                      bgcolor: visitorType[`${dataItem.name}`]
-                        ? 'action.disabled'
-                        : pieChartColors[index],
-                      borderRadius: 400,
-                    }}
-                  ></Box>
-                  <Typography variant="body1" color="text.secondary" flex={1} textAlign={'left'}>
-                    {dataItem.name}
-                  </Typography>
-                  <Typography variant="body1" color="text.primary">
-                    {((parseInt(`${dataItem.value}`) / totalVisitors) * 100).toFixed(0)}%
-                  </Typography>
-                </Stack>
-              </button>
-            ))}
-    </div>
+    //     {Array.isArray(seriesData) &&
+    //         seriesData.map((dataItem, index) => (
+    //           <button
+    //             key={dataItem.name}
+    //             variant="text"
+    //             fullWidth
+    //             onClick={() => {
+    //               toggleClicked(dataItem.name );
+    //               onChartLegendSelectChanged(dataItem.name );
+    //             }}
+    //             sx={{
+    //               justifyContent: 'flex-start',
+    //               p: 0,
+    //               borderRadius: 1,
+    //               opacity: visitorType[`${dataItem.name}`] ? 0.5 : 1,
+    //             }}
+    //             disableRipple
+    //           >
+    //             <Stack direction="row" alignItems="center" gap={1} width={1}>
+    //               <Box
+    //                 sx={{
+    //                   width: 10,
+    //                   height: 10,
+    //                   bgcolor: visitorType[`${dataItem.name}`]
+    //                     ? 'action.disabled'
+    //                     : pieChartColors[index],
+    //                   borderRadius: 400,
+    //                 }}
+    //               ></Box>
+    //               <Typography variant="body1" color="text.secondary" flex={1} textAlign={'left'}>
+    //                 {dataItem.name}
+    //               </Typography>
+    //               <Typography variant="body1" color="text.primary">
+    //                 {((parseInt(`${dataItem.value}`) / totalVisitors) * 100).toFixed(0)}%
+    //               </Typography>
+    //             </Stack>
+    //           </button>
+    //         ))}
+    // </div>
   )
 }
 
