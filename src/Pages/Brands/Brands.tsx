@@ -1,22 +1,26 @@
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 import React, { useEffect, useState } from 'react'
+import useFetch from '../../utils/useFetch'
 
 const Brands = () => {
-  let [Brand, setBrands] = useState([])
+  let {data,loading,error}= useFetch('https://ecomerce.runasp.net/api')
 
   let loginToken = localStorage.getItem('loginToken')
-  let userData = jwtDecode(loginToken)  
 
-  let getBrands = async () => {
-    let res = await axios.get('https://ecomerce.runasp.net/api/Brand/GetAllBrand',{headers:{
-      // Accept:'text/plain',
-      setContentType:'application/json-patch+json',
-      getAccept:'text/plain',
+  // let getBrands = async () => {
+  //   let {data} = await axios.get('https://ecomerce.runasp.net/api/Brand/GetAllBrand',{headers:{
+  //     Authorization:`Bearer ${loginToken}`
 
-    }})
-    console.log(res);
-  }
+  //   }})
+
+  //   console.log(data.result?.items);
+  //   setBrands(data.result?.items)
+  // }
+
+  if(error){
+    console.log(error)
+ }
 
   useEffect(() => {
     // getBrands();

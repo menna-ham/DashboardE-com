@@ -41,9 +41,11 @@ const Login = ({ getUserToken }) => {
   }
 
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values) => {
     try {
       setIsLoading(true);
+      let {userName,password,rememberMe} = {...values}
+      
       const { data } = await axios.post(
         'https://ecomerce.runasp.net/api/User/Login',
         { ...values }
@@ -55,14 +57,14 @@ const Login = ({ getUserToken }) => {
       setIsLoading(false);
     } catch (error) {
       console.log(error);
-    } finally {
-      setSubmitting(false);
-    }
+      setIsLoading(false);
+
+    } 
   };
 
-  let trySubmit= ()=>{
-    console.log('try submitting');
-  }
+  // let trySubmit= ()=>{
+  //   console.log('try submitting');
+  // }
 
 
 
@@ -84,11 +86,11 @@ const Login = ({ getUserToken }) => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={handleSubmit}
+              // onSubmit={console.log('submitting')}
             >
-              {({ errors, touched,isSubmitting }) => (
+              {({ errors, touched,isSubmitting ,values, }) => (
 
-                <Form className="space-y-4 md:space-y-6 bg-transparent " action="#">
+                <Form onSubmit={() =>handleSubmit (values)} className="space-y-4 md:space-y-6 bg-transparent " action="#">
                   <div>
                     <label htmlFor="userName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent">Your UserName</label>
                     <Field type="text" name="userName" id="userName" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500" placeholder="Username" />
@@ -116,9 +118,9 @@ const Login = ({ getUserToken }) => {
 
                   </div>
 
-                  {/* <button type="submit" disabled={isLoading} className="w-full text-white bg-amber-400 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-amber-700 dark:focus:ring-primary-800">{isLoading ? 'Loading...' : 'Sign In'}</button> */}
+                  <button type="submit"  disabled={errors.password ||errors.userName? true: false} className="w-full text-white bg-amber-400 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-amber-700 dark:focus:ring-primary-800">{isLoading ? 'Loading...' : 'Sign In'}</button>
 
-                  <button type="submit" disabled={isSubmitting}  className="w-full text-white bg-amber-400 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-amber-700 dark:focus:ring-primary-800">sign in </button> 
+                  {/* <button onClick={() =>handleSubmit (values)} type="submit" disabled={isSubmitting}  className="w-full text-white bg-amber-400 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-amber-700 dark:focus:ring-primary-800">sign in </button>  */}
 
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                     Don’t have an account yet? <Link to='/SignUp' href="#" className="font-medium text-amber-400 hover:underline dark:text-primary-500 bg-transparent">Sign up</Link>
