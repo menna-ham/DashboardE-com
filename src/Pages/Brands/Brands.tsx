@@ -1,77 +1,143 @@
-import axios from 'axios'
-import { jwtDecode } from 'jwt-decode'
-import React, { useEffect, useState } from 'react'
-import useFetch from '../../utils/useFetch'
+import React, { useState } from 'react'
+import useFetch from '../../utils/useFetch.tsx'
+import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
+import DataTable from '../../components/DataTable/DataTable.jsx';
+import { MdDeleteForever, MdOutlineEditNote, MdViewInAr } from 'react-icons/md';
+import { BiSearch } from 'react-icons/bi';
+import Modal from 'react-modal'
+import ModalComponent from '../../components/ModalComponent/ModalComponent.tsx';
+import noBrand from '../../assets/nologoImg.png'
+import * as Yup from 'yup';
+import { BrandInput, BrandsinitialValues } from '../../utils/inputsFeilds.jsx';
+
+
+
 
 const Brands = () => {
-  let {data,loading,error}= useFetch('https://ecomerce.runasp.net/api')
+  let { data, loading, error } = useFetch('get', 'Brand/GetAllBrand')
+  const [modalIsOpen, setIsOpen] = useState(false);
 
-  let loginToken = localStorage.getItem('loginToken')
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', width: 150 },
+    { field: 'Logo', headerName: 'Logo', width: 150 ,
+      renderCell:(params)=>(
+        <img className='rounded-full  w-10 h-10' src ={params.row.img||noBrand}/>
+      )
+    },
+    { field: 'NameAR', headerName: 'NameAR', width: 150 },
+    { field: 'NameEN', headerName: 'NameEN', width: 150 },
+    {
+      field: 'Actions',
+      width: 150
+      , headerName: 'Actions',
+      renderCell: (params) => {
+        return (
+          <div className='flex flex-row gap-2 items-center mt-2 text-black'>
+            <div className='bg-green-500 p-2 rounded-md cursor-pointer text-white'><MdViewInAr /></div>
+            <div className='bg-yellow-500 p-2 rounded-md cursor-pointer text-white'><MdOutlineEditNote /> </div>
+            <div className='bg-red-500 p-2 rounded-md cursor-pointer text-white'><MdDeleteForever /> </div>
+          </div>
+        )
+      }
+    },
+  ];
+ 
 
-  // let getBrands = async () => {
-  //   let {data} = await axios.get('https://ecomerce.runasp.net/api/Brand/GetAllBrand',{headers:{
-  //     Authorization:`Bearer ${loginToken}`
+  const rows: GridRowsProp = [
+    { id: 0, NameAR: 'Example', NameEN: 'example' },
+    { id: 1, title: 'Demo' }
+  ];
 
-  //   }})
 
-  //   console.log(data.result?.items);
-  //   setBrands(data.result?.items)
-  // }
-
-  if(error){
-    console.log(error)
- }
-
-  useEffect(() => {
-    // getBrands();
-  }, [])
+  function openModal() {
+    setIsOpen(true);
+  }
+  const handleSubmit = (values) => {
+    
+    console.log(values);
+  };
 
 
   return (
-    <div>
-      <div className='my-2 '>
-        <h2 className='uppercase text-2xl font-bold'>Brands Managment</h2>
+    <>
+    {loading && <div>Loading...</div>}
+    {error&& <div>Error: {error}</div>}
+    {/* {data && data?.result?.items?.length !== 0 ?( */}
+
+    <div className='p-2'>
+      <div>
+        <p className=' uppercase text-2xl font-bold '>Brands managment</p>
+        <div className='flex justify-end'>
+          filters
+        </div>
+        <div className='flex flex-row justify-between my-3'>
+
+          <div className='flex flex-row items-center'>
+            <BiSearch className='text-gray-500' />
+            <input type="search" placeholder='Search for' className='h-10 w-96 pr-8 pl-5 rounded z-0 focus:none focus:outline-none' />
+          </div>
+
+          <div> <button onClick={openModal} className='bg-blue-400 text-white p-2 rounded-lg'>Add New Brand</button></div>
+
+        </div>
       </div>
-
-      <div className='my-3'>
-
-        <table className='table table-bordered w-full '>
-
-          <thead>
-            <tr>
-              <th className=''>#</th>
-              <th className=''>Brand</th>
-              <th className=''>Date Created</th>
-              <th className=''>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td className=''>The Sliding </td>
-              <td className=''>Malcolm Lockyer</td>
-              <td className=''>1961</td>
-              <td className=''>1961</td>
-
-            </tr>
-            <tr>
-              <td>The Sliding </td>
-              <td>Malcolm Lockyer</td>
-              <td>1961</td>
-              <td>1961</td>
-
-            </tr>
-
-
-          </tbody>
-
-
-        </table>
-
+      <div style={{ height: 300, width: '100%' }}>
+        <DataTable rows={rows} columns={columns} />
       </div>
+    {modalIsOpen&&<ModalComponent inputs={BrandInput} subtitle='Brand' isOpen={modalIsOpen} setIsOpen={setIsOpen} onSubmit={handleSubmit} initialValues={BrandsinitialValues}/>}
+
 
     </div>
+  {/* //   ):<div>NoRows</div>
+  // } */}
+</>
   )
+
+  // return (
+  //   <div>
+  //     <div className='my-2 '>
+  //       <h2 className='uppercase text-2xl font-bold'>Brands Managment</h2>
+  //     </div>
+
+  //     <div className='my-3'>
+
+  //       <table className='table table-bordered w-full '>
+
+  //         <thead>
+  //           <tr>
+  //             <th className=''>#</th>
+  //             <th className=''>Brand</th>
+  //             <th className=''>Date Created</th>
+  //             <th className=''>Actions</th>
+  //           </tr>
+  //         </thead>
+
+  //         <tbody>
+  //           <tr>
+  //             <td className=''>The Sliding </td>
+  //             <td className=''>Malcolm Lockyer</td>
+  //             <td className=''>1961</td>
+  //             <td className=''>1961</td>
+
+  //           </tr>
+  //           <tr>
+  //             <td>The Sliding </td>
+  //             <td>Malcolm Lockyer</td>
+  //             <td>1961</td>
+  //             <td>1961</td>
+
+  //           </tr>
+
+
+  //         </tbody>
+
+
+  //       </table>
+
+  //     </div>
+
+  //   </div>
+  // )
 }
 
 export default Brands

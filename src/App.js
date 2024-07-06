@@ -3,7 +3,7 @@ import './App.css';
 // import { Sidebar } from 'react-pro-sidebar';
 import SideBarComp from './components/Sidebar/SideBarComp';
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Brands from './Pages/Brands/Brands';
+import Brands from './Pages/Brands/Brands.tsx';
 import Categories from './Pages/Categories/Categories';
 import Home from './Pages/Home/Home';
 import Users from './Pages/Users/Users';

@@ -2,33 +2,44 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 type Props = {
-    url: string,
-    method: string
     endpoint: string,
+    method: string
     body: {}
 }
 
-const useFetch = ({url,method,endpoint,body}: Props) => {
+const useFetch = (method,endpoint,body=null) => {
 
     const [data, setData] = useState(null)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
-    let api = url + endpoint;
+
+    let api = 'https://ecomerce.runasp.net/api/' + endpoint;
     let loginToken = localStorage.getItem('loginToken')
+
     useEffect(() => {
         (
             async function () {
+                setLoading(true);
+                setError(null);
+
                 try {
+                    let response;
                     setLoading(true)
                     switch (method) {
                         case 'get':
-                            const response = await axios.get(api,{headers:{
+                            response = await axios.get(api,{headers:{
                                 Authorization:`Bearer ${loginToken}`
                               }})
+                              console.log(response.data)
                             setData(response.data)
                             break;
 
                         case 'post':
+                            response = await axios.post(api,{headers:{
+                                Authorization:`Bearer ${loginToken}`
+                              }})
+                              
+                            setData(response.data)
 
                             break;
 
@@ -52,7 +63,7 @@ const useFetch = ({url,method,endpoint,body}: Props) => {
                 }
             }
         )()
-    }, [url])
+    }, [api])
 
     return { data, error, loading }
 }
