@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useFetch from '../../utils/useFetch.tsx'
 import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import DataTable from '../../components/DataTable/DataTable.jsx';
@@ -8,24 +8,26 @@ import Modal from 'react-modal'
 import ModalComponent from '../../components/ModalComponent/ModalComponent.tsx';
 import noBrand from '../../assets/nologoImg.png'
 import * as Yup from 'yup';
-import { BrandInput, BrandsinitialValues } from '../../utils/inputsFeilds.jsx';
-
+import { BrandInput, BrandsinitialValues } from '../../utils/inputsFeilds.js';
 
 
 
 const Brands = () => {
-  let { data, loading, error } = useFetch('get', 'Brand/GetAllBrand')
-  const [modalIsOpen, setIsOpen] = useState(false);
+  let { data, loading, error, fetchData } = useFetch('get', 'Brand/GetAllBrand')
+  let [modalIsOpen, setIsOpen] = useState(false);
+  // let {result}:any = data
 
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 150 },
-    { field: 'Logo', headerName: 'Logo', width: 150 ,
-      renderCell:(params)=>(
-        <img className='rounded-full  w-10 h-10' src ={params.row.img||noBrand}/>
+  let columns: GridColDef[] = [
+    { field: 'ID', headerName: 'ID', width: 150 , type:'string'},
+    {
+      field: 'photoPath', headerName: 'Logo', width: 150,
+      renderCell: (params) => (
+        <img className='rounded-full  w-10 h-10' src={`https://ecomerce.runasp.net/images/brands/08fd5c0d-b08d-402b-8362-90a4b4059ef6.png` || noBrand} />
       )
     },
-    { field: 'NameAR', headerName: 'NameAR', width: 150 },
-    { field: 'NameEN', headerName: 'NameEN', width: 150 },
+    { field: 'nameAR', headerName: 'Name Arabic', width: 150 , type:'string'},
+    {field: 'IsActive', headerName:'Is Active', type:'boolean', width:150},
+    { field: 'nameEN', headerName: 'Name English', width: 150 , type:'string'},
     {
       field: 'Actions',
       width: 150
@@ -41,28 +43,72 @@ const Brands = () => {
       }
     },
   ];
- 
 
-  const rows: GridRowsProp = [
-    { id: 0, NameAR: 'Example', NameEN: 'example' },
-    { id: 1, title: 'Demo' }
-  ];
+  
+  let rows: GridRowsProp = [];
 
 
   function openModal() {
     setIsOpen(true);
   }
-  const handleSubmit = (values) => {
+  if (data!=null){
+    let {result}:any = data
+    const filteredData = result?.items.map(item => ({
+      ID:item.id,
+      nameAR: item.nameAR,
+      nameEN: item.nameEN,
+      photoPath: item.photoPath,
+      isActive: item.isActive
+    }));
+    rows=[...filteredData]
+    console.log(rows);
     
-    console.log(values);
-  };
+  }
 
+  useEffect(() => {
+      fetchData();
+  }, [])
+
+  useEffect(() => {
+    fetchData();
+  }, [modalIsOpen])
 
   return (
     <>
-    {loading && <div>Loading...</div>}
-    {error&& <div>Error: {error}</div>}
-    {/* {data && data?.result?.items?.length !== 0 ?( */}
+      {loading && <div>Loading...</div>}
+      {error && <div>Error: {error}</div>}
+
+      {data && 
+
+        <div className='p-2'>
+          <div>
+            <p className=' uppercase text-2xl font-bold '>Brands managment</p>
+            <div className='flex justify-end'>
+              filters
+            </div>
+            <div className='flex flex-row justify-between my-3'>
+
+              <div className='flex flex-row items-center'>
+                <BiSearch className='text-gray-500' />
+                <input type="search" placeholder='Search for' className='h-10 w-96 pr-8 pl-5 rounded z-0 focus:none focus:outline-none' />
+              </div>
+
+              <div> <button onClick={openModal} className='bg-blue-400 text-white p-2 rounded-lg'>Add New Brand</button></div>
+
+            </div>
+          </div>
+          <div style={{ height: 300, width: '100%' }}>
+            <DataTable rows={rows} columns={columns} />
+          </div>
+
+          {modalIsOpen && <ModalComponent inputs={BrandInput} subtitle='Brand' isOpen={modalIsOpen} setIsOpen={setIsOpen} path='Brand/CreateBrand' initialValues={BrandsinitialValues} />}
+
+
+        </div>
+
+      }
+
+      {/* {data && data?.result?.items?.length !== 0 ?(
 
     <div className='p-2'>
       <div>
@@ -84,13 +130,13 @@ const Brands = () => {
       <div style={{ height: 300, width: '100%' }}>
         <DataTable rows={rows} columns={columns} />
       </div>
-    {modalIsOpen&&<ModalComponent inputs={BrandInput} subtitle='Brand' isOpen={modalIsOpen} setIsOpen={setIsOpen} onSubmit={handleSubmit} initialValues={BrandsinitialValues}/>}
+    {modalIsOpen&&<ModalComponent inputs={BrandInput} subtitle='Brand' isOpen={modalIsOpen} setIsOpen={setIsOpen} path='Brand/CreateBrand' initialValues={BrandsinitialValues}/>}
 
 
     </div>
-  {/* //   ):<div>NoRows</div>
-  // } */}
-</>
+  ):<div>NoRows</div>
+   }  */}
+    </>
   )
 
   // return (
