@@ -5,7 +5,7 @@ import DataTable from '../../components/DataTable/DataTable.jsx';
 import { MdDeleteForever, MdOutlineEditNote, MdViewInAr } from 'react-icons/md';
 import { BiSearch } from 'react-icons/bi';
 import Modal from 'react-modal'
-import ModalComponent from '../../components/ModalComponent/ModalComponent.tsx';
+import ModalComponent from '../../components/Modals/ModalComponent/ModalComponent.tsx';
 import noBrand from '../../assets/nologoImg.png'
 import * as Yup from 'yup';
 import { BrandInput, BrandsinitialValues } from '../../utils/inputsFeilds.js';
@@ -22,7 +22,7 @@ const Brands = () => {
     {
       field: 'photoPath', headerName: 'Logo', width: 150,
       renderCell: (params) => (
-        <img className='rounded-full  w-10 h-10' src={`https://ecomerce.runasp.net/images/brands/08fd5c0d-b08d-402b-8362-90a4b4059ef6.png` || noBrand} />
+        <img className='rounded-full  w-10 h-10' src={ noBrand} /> //`https://ecomerce.runasp.net/images/brands/08fd5c0d-b08d-402b-8362-90a4b4059ef6.png` ||
       )
     },
     { field: 'nameAR', headerName: 'Name Arabic', width: 150 , type:'string'},
@@ -51,6 +51,7 @@ const Brands = () => {
   function openModal() {
     setIsOpen(true);
   }
+
   if (data!=null){
     let {result}:any = data
     const filteredData = result?.items.map(item => ({
@@ -61,8 +62,7 @@ const Brands = () => {
       isActive: item.isActive
     }));
     rows=[...filteredData]
-    console.log(rows);
-    
+    // console.log(rows);
   }
 
   useEffect(() => {

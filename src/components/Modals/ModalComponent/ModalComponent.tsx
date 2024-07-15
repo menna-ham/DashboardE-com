@@ -4,7 +4,10 @@ import Modal from 'react-modal'
 import { Form } from 'react-router-dom';
 import * as Yup from 'yup';
 import { AiOutlineClose } from "react-icons/ai";
-import useFetch from '../../utils/useFetch.tsx';
+import useFetch from '../../../utils/useFetch.tsx';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { successfulAlert } from '../SuccessfulModal/SuccessfulModal.js';
 // import useFetch from '../../utils/useFetch.tsx';
 
 
@@ -24,13 +27,14 @@ const customStyles = {
 
 const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) => {
   let { data, loading, error, fetchData } = useFetch('post', path)
-
-const validationSchema = Yup.object().shape(
-  inputs.reduce((schema, input) => {
-    schema[input.name] = input.validation;
-    return schema;
-  }, {})
-);
+  let [Success, setSuccess] = useState(false)
+  const validationSchema = Yup.object().shape(
+    inputs.reduce((schema, input) => {
+      schema[input.name] = input.validation;
+      return schema;
+    }, {})
+  );
+  const MySwal = withReactContent(Swal)
 
     function afterOpenModal() {
       subtitle.style.color = '#f00';
@@ -47,13 +51,24 @@ const validationSchema = Yup.object().shape(
       formData.append('FormFile', values.FormFile);
       console.log(formData.getAll('NameAR'));
         
-      await fetchData(formData)
-      console.log(data, error, loading);
-        
-      
+      try {
+        let res:any = await fetchData(formData)
+        console.log(res);
+        setSuccess(res?.isSuccess);
+        if(res?.isSuccess)
+          {
+           successfulAlert('brand added')
+            closeModal()
+          }
+                
+      } catch (error) {
+        setSuccess(false);
+        console.log(Success);
+      }
     };
 
     
+   console.log(data);
     
 
   return (
@@ -66,14 +81,13 @@ const validationSchema = Yup.object().shape(
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
+        contentLabel={`Create ${subtitle}`}
         ariaHideApp={false}
       >
         <button className='float-end' onClick={closeModal}><AiOutlineClose />  </button>
 
         <h2 className='Font-bold text-xl text-blue-500 ' ref={(_subtitle) => (subtitle = _subtitle)}>Create New {subtitle}</h2>
-        
-        
+              
         <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -95,7 +109,6 @@ const validationSchema = Yup.object().shape(
                 value={undefined}
                 onChange={(event) => {
                   setFieldValue(input.name, event.target.files[0]);
-                  console.log(event);
                   
                 }}
                 className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
@@ -115,36 +128,26 @@ const validationSchema = Yup.object().shape(
           
           )) 
           }
-            
-
-          
-          {/* <div className='flex flex-col gap-2'>
-          <p></p> */}
 
           <div className='flex gap-2 mt-5 justify-end'>
 
-          <button type='submit' disabled={Object.entries(errors).length > 0 || isSubmitting ||(Object.keys(initialValues).length === 0 && Object.keys(values).length === 0 )} className='bg-blue-400 p-2 rounded-lg text-white font-bold'> Create</button>
+          <button type='submit' disabled={isSubmitting ||Object.entries(errors).length > 0 || isSubmitting ||(Object.keys(initialValues).length === 0 && Object.keys(values).length === 0 )} className='bg-blue-400 p-2 rounded-lg text-white font-bold'> {isSubmitting?'Adding': 'create'}</button>
 
           <button type='reset' onClick={closeModal} className='bg-red-400 p-2 rounded-lg text-white font-bold'> Cancel</button>
           </div>
-          {/* </div> */}
             
         </Form>
         )
       }
       </Formik>
-      {/* {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      {data && (
-                <div>
-                    <h2>API Response</h2>
-                      {data}
-                </div>
-      )} */}
 
+      {/* <div><button onClick={()=>successfulAlert('test')}>alert</button></div> */}
 
       </Modal>
     </div>
+
+    {Success&&<div>success</div>}
+    {error&&<div>error</div>}
 
     </>
   )

@@ -36,7 +36,8 @@ const useFetch = (method,endpoint) => {
                 case 'post':
                     response = await axios.post(api, body, {
                         headers: {
-                            Authorization: `Bearer ${loginToken}`
+                            Authorization: `Bearer ${loginToken}`,
+                            "Content-Type":'multipart/form-data'
                         }
                     });
                     setData(response.data);
