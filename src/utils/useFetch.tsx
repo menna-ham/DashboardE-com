@@ -31,6 +31,8 @@ const useFetch = (method,endpoint) => {
                         }
                     });
                     setData(response.data);
+                    // console.log(response.data);
+                    
                     break;
 
                 case 'post':
@@ -48,7 +50,8 @@ const useFetch = (method,endpoint) => {
                 case 'put':
                     response = await axios.put(api, body, {
                         headers: {
-                            Authorization: `Bearer ${loginToken}`
+                            Authorization: `Bearer ${loginToken}`,
+                             "Content-Type":'multipart/form-data'
                         }
                     });
                     setData(response.data);
