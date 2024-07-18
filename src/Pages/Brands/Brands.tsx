@@ -45,7 +45,7 @@ const Brands = () => {
       field: 'Actions',
       width: 150
       , headerName: 'Actions',
-      renderCell: (_params: any, _text: any, row: any, params) => {
+      renderCell: (params,_params: any, _text: any, row: any ) => {
         return (
           <div className='flex flex-row gap-2 items-center mt-2 text-black'>
             <div className='bg-green-500 p-2 rounded-md cursor-pointer text-white'><MdViewInAr /></div>
@@ -117,7 +117,7 @@ const Brands = () => {
 
           {modalIsOpen && <ModalComponent inputs={BrandInput} subtitle='Brand' isOpen={modalIsOpen} setIsOpen={setIsOpen} path='Brand/CreateBrand' initialValues={BrandsinitialValues} />}
 
-          {updateModalIsOpen&& <UpdateModal isOpen={updateModalIsOpen} setIsOpen={setUpdateIsOpen} subtitle={'Brand'}/>}
+          {updateModalIsOpen&& <UpdateModal isOpen={updateModalIsOpen} setIsOpen={setUpdateIsOpen} subtitle={'Brand'} />}
 
 
         </div>
