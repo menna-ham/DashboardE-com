@@ -1,6 +1,6 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
 import React from 'react'
-
+let string ='test';
 const customStyle= {
   position: 'absolute' as 'absolute',
   top: '50%',
