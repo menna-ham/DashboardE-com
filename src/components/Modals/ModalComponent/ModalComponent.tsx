@@ -8,7 +8,6 @@ import useFetch from '../../../utils/useFetch.tsx';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { successfulAlert } from '../SuccessfulModal/SuccessfulModal.js';
-// import useFetch from '../../utils/useFetch.tsx';
 
 
 const customStyles = {

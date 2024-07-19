@@ -16,19 +16,28 @@ import UpdateModal from '../../components/Modals/UpdateModal/UpdateModal.tsx';
 const Brands = () => {
   let { data, loading, error, fetchData } = useFetch('get', 'Brand/GetAllBrand')
   let [modalIsOpen, setIsOpen] = useState(false);
+  let [IDUpdate, setIDUpdate] = useState('');
+  let [Items, setItems] = useState({})
   let [updateModalIsOpen, setUpdateIsOpen] = useState(false);
   let [DeleteModalIsOpen, setDeleteIsOpen] = useState(false);
+
   // let {result}:any = data
  let handleEdit = (row) => {
-  console.log('edit');
+  console.log('edit', row.ID);
   setUpdateIsOpen(true)
+  setIDUpdate(row.ID)
   
   };
   let handleDelete = (row) => {
     console.log('delete');
     setUpdateIsOpen(true)
     
-    };
+  };
+
+    
+  function openModal() {
+    setIsOpen(true);
+  }
 
   let columns: GridColDef[] = [
     { field: 'ID', headerName: 'ID', width: 150 , type:'string'},
@@ -45,26 +54,20 @@ const Brands = () => {
       field: 'Actions',
       width: 150
       , headerName: 'Actions',
-      renderCell: (params,_params: any, _text: any, row: any ) => {
+      renderCell: (params ) => {
         return (
           <div className='flex flex-row gap-2 items-center mt-2 text-black'>
             <div className='bg-green-500 p-2 rounded-md cursor-pointer text-white'><MdViewInAr /></div>
-            <button className='bg-yellow-500 p-2 rounded-md cursor-pointer text-white' onClick={() => handleEdit(row)
+            <button className='bg-yellow-500 p-2 rounded-md cursor-pointer text-white' onClick={() => handleEdit(params.row)
             }><MdOutlineEditNote /> </button>
-            <div className='bg-red-500 p-2 rounded-md cursor-pointer text-white' onClick={() => handleDelete(row)}><MdDeleteForever /> </div>
+            <div className='bg-red-500 p-2 rounded-md cursor-pointer text-white' onClick={() => handleDelete(params.row)}><MdDeleteForever /> </div>
           </div>
         )
       }
     },
   ];
-
   
   let rows: GridRowsProp = [];
-
-
-  function openModal() {
-    setIsOpen(true);
-  }
 
   if (data!=null){
     let {result}:any = data
@@ -76,11 +79,13 @@ const Brands = () => {
       isActive: item.isActive
     }));
     rows=[...filteredData]
+    // console.log(result)
+    // setItems(result.items)
     // console.log(rows);
   }
 
   useEffect(() => {
-      fetchData();
+    fetchData()
   }, [])
 
   useEffect(() => {
@@ -117,7 +122,7 @@ const Brands = () => {
 
           {modalIsOpen && <ModalComponent inputs={BrandInput} subtitle='Brand' isOpen={modalIsOpen} setIsOpen={setIsOpen} path='Brand/CreateBrand' initialValues={BrandsinitialValues} />}
 
-          {updateModalIsOpen&& <UpdateModal isOpen={updateModalIsOpen} setIsOpen={setUpdateIsOpen} subtitle={'Brand'} />}
+          {updateModalIsOpen&& <UpdateModal isOpen={updateModalIsOpen} setIsOpen={setUpdateIsOpen} subtitle={'Brand'} path='Brand/FindBrand' ID={IDUpdate} inputs={BrandInput}/>}
 
 
         </div>
@@ -126,51 +131,6 @@ const Brands = () => {
     </>
   )
 
-  // return (
-  //   <div>
-  //     <div className='my-2 '>
-  //       <h2 className='uppercase text-2xl font-bold'>Brands Managment</h2>
-  //     </div>
-
-  //     <div className='my-3'>
-
-  //       <table className='table table-bordered w-full '>
-
-  //         <thead>
-  //           <tr>
-  //             <th className=''>#</th>
-  //             <th className=''>Brand</th>
-  //             <th className=''>Date Created</th>
-  //             <th className=''>Actions</th>
-  //           </tr>
-  //         </thead>
-
-  //         <tbody>
-  //           <tr>
-  //             <td className=''>The Sliding </td>
-  //             <td className=''>Malcolm Lockyer</td>
-  //             <td className=''>1961</td>
-  //             <td className=''>1961</td>
-
-  //           </tr>
-  //           <tr>
-  //             <td>The Sliding </td>
-  //             <td>Malcolm Lockyer</td>
-  //             <td>1961</td>
-  //             <td>1961</td>
-
-  //           </tr>
-
-
-  //         </tbody>
-
-
-  //       </table>
-
-  //     </div>
-
-  //   </div>
-  // )
 }
 
 export default Brands

@@ -13,10 +13,18 @@ export let BrandInput=[
         return true;
       }),
     },
+    {name:'isActive', label:'Is Active', type:'radio',options:[{label:'Active',value:true},{label:'Not Active',value:false}], validation:Yup.boolean()}
   ]
 
 export let BrandsinitialValues={
     NameAR:'',
     NameEN:'',
     FormFile:undefined,
-  } 
+    isActive:true
+} 
+
+// export let BrandsinitialValues={
+//   NameAR:'',
+//   NameEN:'',
+//   FormFile:undefined,
+// } 
