@@ -63,20 +63,21 @@ const UpdateModal = ({ isOpen, setIsOpen, subtitle, path, ID, inputs }) => {
         Authorization: `Bearer ${loginToken}`
       }
     })
-    setItem(data.result);
-
+    let item ={...data.result}
+    setItem(item);
     initialValues = {
       ...data.result
     }
+    console.log('item', Item)
+
     setInitialValue(initialValues)
     console.log('initial', initialValues);
-
-
   }
 
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
+
   function afterOpenModal() {
     subtitle.style.color = '#f00';
   }
@@ -108,10 +109,10 @@ const UpdateModal = ({ isOpen, setIsOpen, subtitle, path, ID, inputs }) => {
 
 
   useEffect(() => {
-    if (isOpen) {
+    // if (isOpen) {
       getItem();
 
-    }
+    // }
   }, []);
   return (
     <div>
@@ -147,27 +148,29 @@ const UpdateModal = ({ isOpen, setIsOpen, subtitle, path, ID, inputs }) => {
                       return (
                         <div key={input.name} className=''>
                           <label htmlFor={input.name} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent">{input.label}</label>
-                          <Field name={input.name}>
+                          {/* <Field name={input.name}>
                               {({ field }) => (
                                 <input
                                   {...field}
                                   type="text"
                                   id={input.name}
-                                  defaultValue={Item[input.name.charAt(0).toLowerCase() + input.name.slice(1)]} //values[input.name.charAt(0).toLowerCase() + input.name.slice(1)]
-                                  onChange={handleChange}
+                                  name={input.name}
+                                  // defaultValue={Item[input.name.charAt(0).toLowerCase()+input.name.slice(1)]}
+                                  defaultValue={Item[input.name.charAt(0).toLowerCase()+input.name.slice(1)]} //values[input.name.charAt(0).toLowerCase() + input.name.slice(1)]
+                                  onChange={(event)=>{setFieldValue(input.name,event.target.value); console.log(input.name.charAt(0).toLowerCase()+input.name.slice(1))}}
                                   onBlur={handleBlur}
                                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
                                 />
                               )}
-                            </Field>
-                          {/* <Field
+                            </Field> */}
+                          <Field
                             type={input.type}
                             id={input.name}
                             name={input.name}
-                            value={Item[input.name.charAt(0).toLowerCase() + input.name.slice(1)]||''}
+                            defaultValue={initialValues[input.name.charAt(0).toLowerCase() + input.name.slice(1)]}
                             onChange={handleChange}
                             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
-                          /> */}
+                          />
                           <ErrorMessage name={input.name} component="div" className='text-sm text-red-500' />
                         </div>
                       );
