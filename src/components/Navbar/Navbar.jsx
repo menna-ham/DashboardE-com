@@ -1,4 +1,3 @@
-import { ArrowDownIcon, UserIcon } from '@heroicons/react/16/solid';
 import { EG, FR, US } from 'country-flag-icons/react/1x1';
 import React, { useState } from 'react'
 import { BiLogOutCircle } from 'react-icons/bi';
@@ -10,25 +9,49 @@ import { IoMdNotifications } from 'react-icons/io';
 import { MdLanguage } from "react-icons/md";
 import { TiArrowSortedDown } from 'react-icons/ti';
 import { Link } from 'react-router-dom';
+import { IoMdClose } from "react-icons/io";
 
-const Navbar = ({ toggleSideBar, settoggleSideBar }) => {
+
+const Navbar = ({ collapseSideBar, setCollapseSideBar, broken , toggled , setToggled }) => {
   let [hideLang, setHideLang] = useState(false)
-  let [togProfile, setTogProfile] = useState(false)
+  let [togProfile, setTogProfile] = useState(false);
+  let [searNav, setSearNav] = useState(false)
 
 
 
   return (
-    <div className=' p-3 flex flex-row justify-between items-center'>
+    <div className='relative py-2 px-3 flex flex-row justify-between items-center bg-white rounded-lg shadow-sm'>
+      {
+        searNav&&<div className='flex flex-row justify-between items-center bg-white absolute left-0 right-0 z-20 rounded-lg'>
+        <div className='p-2'>
+          <input placeholder='Search...' className='border-none outline-none rounded-full px-2 py-1 w-full' />
+        </div>
+        <div>
+        <button className="p-3 " onClick={() => setSearNav(false)}><IoMdClose /></button>
+        </div>
+      </div>
+      }
+
 
       <div className='flex flex-row w-[40%] gap-3'>
-        <button onClick={() => settoggleSideBar(!toggleSideBar)}>
+        { broken?
+        <button onClick={() => {setToggled(!toggled); console.log('toggling');}}>
+          <FaBars />
+        </button>:
+        <button onClick={() => {setCollapseSideBar(!collapseSideBar); console.log('collapsing');}}>
           <FaBars />
         </button>
-        <p className='text-xl '>Dashboard</p>
-        <div className='border-[1px] border-black rounded-full px-1 w-[70%] flex flex-row justify-between items-center'>
-          <input placeholder='Search...' className='border-none outline-none rounded-full px-2 py-1 w-full' />
-          <CiSearch />
+        }
+
+        
+        <button onClick={()=>setSearNav(true)}>
+
+        <div className='flex flex-row justify-between items-center gap-2'>
+          <CiSearch className='text-gray-700' size={'20px'}/>
+          <p className='text-gray-400 text-lg '>Search...</p>
         </div>
+
+        </button>
 
       </div>
 

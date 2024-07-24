@@ -167,8 +167,9 @@ const UpdateModal = ({ isOpen, setIsOpen, subtitle, path, ID, inputs }) => {
                             type={input.type}
                             id={input.name}
                             name={input.name}
-                            defaultValue={initialValues[input.name.charAt(0).toLowerCase() + input.name.slice(1)]}
-                            onChange={handleChange}
+                            defaultValue={initialValues[input.name.charAt(0).toLowerCase()+input.name.slice(1)]}
+                            onChange={()=>console.log(initialValues[input.name.charAt(0).toLowerCase()+input.name.slice(1)])}
+                            // onChange={(event)=> setFieldValue(input.name, event.target.value)}
                             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
                           />
                           <ErrorMessage name={input.name} component="div" className='text-sm text-red-500' />
@@ -183,7 +184,7 @@ const UpdateModal = ({ isOpen, setIsOpen, subtitle, path, ID, inputs }) => {
                             id={input.name}
                             name={input.name}
                             accept=".jpg, .jpeg, .png, .JPG, .JPEG, .PNG"
-                            value={Item[input.name]}
+                            value={values[input.name]}
                             onChange={(event) => {
                               setFieldValue(input.name, event.target.files[0]);
                             }}

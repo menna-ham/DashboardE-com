@@ -48,6 +48,7 @@ const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) 
       formData.append('NameAR', values.NameAR);
       formData.append('NameEN', values.NameEN);
       formData.append('FormFile', values.FormFile);
+      formData.append('FormFile', values.isActive);
       console.log(formData.getAll('NameAR'));
         
       try {
@@ -98,34 +99,95 @@ const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) 
 
         <Form onSubmit={()=>handleSubmit(values)} className='grid grid-cols-2 gap-2 my-2 items-center'>
           {inputs.map((input) => (
-            
-              input.type==='image'? 
-              <div key={input.name} className=''>
-              <label htmlFor={input.name} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent">{input.label}</label>
-              <Field
-                type='file'
-                id={input.name}
-                name={input.name}
-                accept=".jpg, .jpeg, .png, .JPG, .JPEG, .PNG"
-                value={undefined}
-                onChange={(event) => {
-                  setFieldValue(input.name, event.target.files[0]);
+            (() => {
+              switch (input.type) {
+                case 'text':
+                  return (
+                    <div key={input.name} className=''>
+                      <label htmlFor={input.name} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent">{input.label}</label>
+                      <Field
+                        type={input.type}
+                        id={input.name}
+                        name={input.name}
+                        onChange={(event)=> setFieldValue(input.name, event.target.value)}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+                      />
+                      <ErrorMessage name={input.name} component="div" className='text-sm text-red-500' />
+                    </div>
+                  );
+                case 'image':
+                  return (
+                    <div key={input.name} className=''>
+                      <label htmlFor={input.name} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent">{input.label}</label>
+                      <Field
+                        type='file'
+                        id={input.name}
+                        name={input.name}
+                        value={undefined}
+                        accept=".jpg, .jpeg, .png, .JPG, .JPEG, .PNG"
+                        onChange={(event) => {
+                          setFieldValue(input.name, event.target.files[0]);
+                        }}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+                      />
+                      <ErrorMessage name={input.name} component="div" className='text-sm text-red-500' />
+                    </div>
+                  );
+                // case 'radio':
+
+                //   return (
+                //     <div key={input.name} className='flex flex-row gap-3 items-center  h-full mt-4'>
+                      
+                //       {
+                //         input.options.map((option) => (
+                //           <div key={option.value} className='flex flex-row gap-1  justify-center my-auto'>
+                //           <Field
+                //             type="radio"
+                //             id={`${input.name}_${option.value}`}
+                //             name={input.name}
+                //             checked={values[input.name] === option.value}
+                //             onChange={() => setFieldValue(input.name, option.value)}
+                //           />
+                //             <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent" htmlFor={`${input.name}_${option.value}`}>{option.label}</label>
+                //         </div>
+
+                //         ))
+                //       }
+                //     </div>
+                //   )
+                default:
+                  return null;
+              }
+            })()
+
+          
+            //   input.type==='image'? 
+            //   <div key={input.name} className=''>
+            //   <label htmlFor={input.name} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent">{input.label}</label>
+            //   <Field
+            //     type='file'
+            //     id={input.name}
+            //     name={input.name}
+            //     accept=".jpg, .jpeg, .png, .JPG, .JPEG, .PNG"
+            //     value={undefined}
+            //     onChange={(event) => {
+            //       setFieldValue(input.name, event.target.files[0]);
                   
-                }}
-                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
-              />
-              <ErrorMessage name={input.name} component="div"  className='text-sm text-red-500'/>
-            </div>
-                :<div key={input.name} className=''>
-                <label htmlFor={input.name} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent">{input.label}</label>
-                <Field
-                  type={input.type}
-                  id={input.name}
-                  name={input.name}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
-                />
-                <ErrorMessage name={input.name} component="div"  className='text-sm text-red-500'/>
-              </div>
+            //     }}
+            //     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+            //   />
+            //   <ErrorMessage name={input.name} component="div"  className='text-sm text-red-500'/>
+            // </div>
+            //     :<div key={input.name} className=''>
+            //     <label htmlFor={input.name} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent">{input.label}</label>
+            //     <Field
+            //       type={input.type}
+            //       id={input.name}
+            //       name={input.name}
+            //       className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+            //     />
+            //     <ErrorMessage name={input.name} component="div"  className='text-sm text-red-500'/>
+            //   </div>
           
           )) 
           }
