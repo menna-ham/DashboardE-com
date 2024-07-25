@@ -91,7 +91,12 @@ const DataTable = ({ columns, rows }) => {
                 }
               }}
               rows={rows}
-              slots={{ toolbar: GridToolbar , pagination:CustomPagination}}
+              
+              slots={{ 
+                toolbar: GridToolbar ,
+                 
+                pagination:CustomPagination,
+              }}
               getRowId={(row) => row.ID}
               pageSizeOptions={[10]}
               //   checkboxSelection

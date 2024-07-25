@@ -35,6 +35,12 @@ const useFetch = (method,endpoint) => {
                     break;
 
                 case 'post':
+                    response = await axios.post(api,body,{
+                        headers: {
+                            Authorization: `Bearer ${loginToken}`,
+                            "Content-Type":'multipart/form-data'
+                        },
+                    });
                     // response = await axios.post(api,{
                     //     data:{
                     //         body:body
@@ -45,15 +51,15 @@ const useFetch = (method,endpoint) => {
                     //     },
                     // });
 
-                   response= await axios({
-                        method:'post',
-                        url:api,
-                        headers: {
-                            Authorization: `Bearer ${loginToken}`,
-                            "Content-Type":'multipart/form-data'
-                        },
-                        data:body
-                    })
+                //    response= await axios({
+                //         method:'post',
+                //         url:api,
+                //         headers: {
+                //             Authorization: `Bearer ${loginToken}`,
+                //             "Content-Type":'multipart/form-data'
+                //         },
+                //         data:body
+                //     })
                     setData(response.data);
                     console.log(response);
                     

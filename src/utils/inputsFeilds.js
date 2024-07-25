@@ -13,14 +13,14 @@ export const BrandInput=[
         return true;
       }),
     },
-    {name:'isActive', label:'Is Active', type:'radio',options:[{label:'Active',value:true},{label:'Not Active',value:false}], validation:Yup.boolean()}
+    // {name:'isActive', label:'Is Active', type:'radio',options:[{label:'Active',value:true},{label:'Not Active',value:false}], validation:Yup.boolean()}
   ]
 
 export const BrandsinitialValues={
     nameAR:'',
     nameEN:'',
     formFile:undefined,
-    isActive:true
+    // isActive:true
 } 
 
 // export let BrandsinitialValues={

@@ -48,8 +48,8 @@ const Brands = () => {
       )
     },
     { field: 'nameAR', headerName: 'Name Arabic', width: 150 , type:'string'},
-    {field: 'isActive', headerName:'Is Active', type:'boolean', width:150},
     { field: 'nameEN', headerName: 'Name English', width: 150 , type:'string'},
+    {field: 'isActive', headerName:'Is Active', type:'boolean', width:150},
     {
       field: 'Actions',
       width: 150
@@ -57,10 +57,10 @@ const Brands = () => {
       renderCell: (params ) => {
         return (
           <div className='flex flex-row gap-2 items-center mt-2 text-black'>
-            <div className='bg-green-500 p-2 rounded-md cursor-pointer text-white'><MdViewInAr /></div>
-            <button className='bg-yellow-500 p-2 rounded-md cursor-pointer text-white' onClick={() => handleEdit(params.row)
-            }><MdOutlineEditNote /> </button>
-            <div className='bg-red-500 p-2 rounded-md cursor-pointer text-white' onClick={() => handleDelete(params.row)}><MdDeleteForever /> </div>
+            <div className=' p-2 rounded-md cursor-pointer text-white'><MdViewInAr  className='text-gray-700' size={'20px'}/></div>
+            <button className=' p-2 rounded-md cursor-pointer text-white' onClick={() => handleEdit(params.row)
+            }><MdOutlineEditNote  className='text-gray-700' size={'20px'}/> </button>
+            <div className='p-2 rounded-md cursor-pointer text-white' onClick={() => handleDelete(params.row)}><MdDeleteForever className='text-gray-700' size={'20px'}/> </div>
           </div>
         )
       }

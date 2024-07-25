@@ -45,10 +45,10 @@ const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) 
 
     const handleSubmit = async(values) => {
       let formData:any = new FormData()
-      formData.append('NameAR', values.NameAR);
-      formData.append('NameEN', values.NameEN);
-      formData.append('FormFile', values.FormFile);
-      formData.append('FormFile', values.isActive);
+      formData.append('nameAR', values.nameAR);
+      formData.append('nameEN', values.nameEN);
+      formData.append('formFile', values.formFile);
+      // formData.append('FormFile', values.isActive); //adding for create 
       console.log(formData.getAll('NameAR'));
         
       try {
