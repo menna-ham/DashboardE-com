@@ -76,9 +76,13 @@ const useFetch = (method,endpoint) => {
                     break;
 
                 case 'delete':
-                    response = await axios.delete(api, {
+                    console.log('body',body)
+                    response = await axios.delete(api,{
                         headers: {
                             Authorization: `Bearer ${loginToken}`
+                        },
+                        data:{
+                           ID:body
                         }
                     });
                     setData(response.data);

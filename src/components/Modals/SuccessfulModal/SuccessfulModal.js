@@ -47,6 +47,4 @@ export let successfulAlert = (text)=>{
         text: "Brand Addedd Successfully",
         // footer: '<a href="#">Why do I have this issue?</a>'
       });
-
-
 }

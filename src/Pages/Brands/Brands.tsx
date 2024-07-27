@@ -1,87 +1,202 @@
 import React, { useEffect, useState } from 'react'
 import useFetch from '../../utils/useFetch.tsx'
-import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
+import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import DataTable from '../../components/DataTable/DataTable.jsx';
 import { MdDeleteForever, MdOutlineEditNote, MdViewInAr } from 'react-icons/md';
 import { BiSearch } from 'react-icons/bi';
-import Modal from 'react-modal'
 import ModalComponent from '../../components/Modals/ModalComponent/ModalComponent.tsx';
-import noBrand from '../../assets/nologoImg.png'
-import * as Yup from 'yup';
+import noBrand from '../../assets/black.png';
 import { BrandInput, BrandsinitialValues } from '../../utils/inputsFeilds.js';
 import UpdateModal from '../../components/Modals/UpdateModal/UpdateModal.tsx';
+import Switch from "react-switch";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Avatar } from '@mui/material';
+import Swal from 'sweetalert2';
 
 
 
 const Brands = () => {
   let { data, loading, error, fetchData } = useFetch('get', 'Brand/GetAllBrand')
+  let { data:activeRes, loading:activeLoad, error:activeError, fetchData:activeFun } = useFetch('put', 'Brand/ToggleAvtiveBrand')
+  let { data:deleteRes, loading:deleteLoad, error:deleteError, fetchData:deleteFun } = useFetch('delete', 'Brand/DeleteBrand')
   let [modalIsOpen, setIsOpen] = useState(false);
   let [IDUpdate, setIDUpdate] = useState('');
   let [Items, setItems] = useState({})
   let [updateModalIsOpen, setUpdateIsOpen] = useState(false);
   let [DeleteModalIsOpen, setDeleteIsOpen] = useState(false);
+  let [activeLoading, setActiveLoading] = useState({});
+  let [delID, setdelID] = useState({ID:''});
 
-  // let {result}:any = data
- let handleEdit = (row) => {
-  console.log('edit', row.ID);
-  setUpdateIsOpen(true)
-  setIDUpdate(row.ID)
-  
-  };
-  let handleDelete = (row) => {
-    console.log('delete');
+  let handleEdit = (row) => {
+    console.log('edit', row.ID);
     setUpdateIsOpen(true)
-    
+    setIDUpdate(row.ID)
+
   };
 
-    
+
+  let handleDelete = (row) => {
+    console.log('delete', row);
+    let formatData = new FormData();
+    formatData.append("ID",row.ID)
+
+    Swal.fire({
+      title: "Are you sure you want to delete "+ row.nameEN+"?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      // preConfirm: async () => {
+      //   console.log('preconfirm');
+        
+      //   try {
+      //     await deleteFun(row.ID);
+      //     console.log('insideTry', deleteRes)
+      //     if (deleteRes?.isSuccess) {
+      //       console.log('yes deleted', deleteRes);
+      //       // setRows((prevRows) => prevRows.filter((r) => r.id !== row.id));
+      //       Swal.fire({
+      //         title: 'Deleted!',
+      //         text: 'Your file has been deleted.',
+      //         icon: 'success',
+      //       });
+      //     }
+      //   } catch (deleteRes) {
+      //     console.error('Error deleting row:', deleteRes);
+      //     Swal.fire({
+      //       title: 'Error!',
+      //       text: 'There was an error deleting your file.',
+      //       icon: 'error',
+      //     });
+      //   } 
+      // },
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        console.log('confirmed')
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Your file has been deleted.',
+          icon: 'success',
+        });
+        try {
+          await deleteFun(row.ID);
+          if (deleteRes?.isSuccess) {
+            console.log('yes deleted', deleteRes);
+            // setRows((prevRows) => prevRows.filter((r) => r.id !== row.id));
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Your file has been deleted.',
+              icon: 'success',
+            });
+          }
+        } catch (error) {
+          console.error('Error deleting row:', error);
+          Swal.fire({
+            title: 'Error!',
+            text: 'There was an error deleting your file.',
+            icon: 'error',
+          });
+        } 
+        }
+  })
+
+  };
+
+  let handleDeleteTest = async (row:any) => {
+    console.log(row.ID)
+    let formatData:any = new FormData()
+    formatData.append("ID",row.ID)
+    // console.log('formatData',formatData.get('ID'))
+   try {
+          await deleteFun(row.ID);
+          console.log('insideTry', deleteRes)
+          if (deleteRes?.isSuccess) {
+            console.log('yes deleted', deleteRes);
+
+        }
+      } catch (deleteRes) {
+          console.error('Error deleting row:', deleteRes);
+        
+        } 
+   }
+  
+
+
   function openModal() {
     setIsOpen(true);
   }
 
+  let handleActive = async(ID:any) => {
+    let formData:any = new FormData()
+    formData.append('ID', ID);
+    setActiveLoading(prev => ({ ...prev, [ID]: true }));
+
+    try{
+      // setActiveLoading(true);
+      await activeFun(formData);
+      console.log(activeRes)
+      setActiveLoading(activeLoad)
+    }catch{
+      console.log(activeError)
+      setActiveLoading(prev => ({ ...prev, [ID]: false }));
+    }
+  }
+
   let columns: GridColDef[] = [
-    { field: 'ID', headerName: 'ID', width: 150 , type:'string'},
+    { field: 'ID', headerName: 'ID', width: 150, type: 'string' },
     {
-      field: 'photoPath', headerName: 'Logo', width: 150,
+      field: 'photoPath', headerName: 'Logo', width: 150,align:'center',
       renderCell: (params) => (
-        <img className='rounded-full  w-10 h-10' src={ noBrand} /> //`https://ecomerce.runasp.net/images/brands/08fd5c0d-b08d-402b-8362-90a4b4059ef6.png` ||
+        <Avatar alt="Remy Sharp" src={noBrand}  /> 
       )
     },
-    { field: 'nameAR', headerName: 'Name Arabic', width: 150 , type:'string'},
-    { field: 'nameEN', headerName: 'Name English', width: 150 , type:'string'},
-    {field: 'isActive', headerName:'Is Active', type:'boolean', width:150},
+    { field: 'nameAR', headerName: 'Name Arabic', width: 150, type: 'string' },
+    { field: 'nameEN', headerName: 'Name English', width: 150, type: 'string' },
+    {
+      field: 'isActive', headerName: 'Is Active', type: 'boolean', width: 150,
+      renderCell: (params) => {
+        return (<>
+        {
+           activeLoading[params.row.ID]?<AiOutlineLoading3Quarters className="spinner"/>
+            :<Switch onChange={()=>handleActive(params.row.ID)} checked={params.row.isActive} height={15} width={40} 
+            offColor='#475569' onColor='#7367f0' />
+        }
+        </>
+        )
+      },
+    },
     {
       field: 'Actions',
-      width: 150
+      width: 150,
+      type:'actions'
       , headerName: 'Actions',
-      renderCell: (params ) => {
+      renderCell: (params) => {
         return (
           <div className='flex flex-row gap-2 items-center mt-2 text-black'>
-            <div className=' p-2 rounded-md cursor-pointer text-white'><MdViewInAr  className='text-gray-700' size={'20px'}/></div>
+            <div className=' p-2 rounded-md cursor-pointer text-white'><MdViewInAr className='text-gray-700' size={'20px'} /></div>
             <button className=' p-2 rounded-md cursor-pointer text-white' onClick={() => handleEdit(params.row)
-            }><MdOutlineEditNote  className='text-gray-700' size={'20px'}/> </button>
-            <div className='p-2 rounded-md cursor-pointer text-white' onClick={() => handleDelete(params.row)}><MdDeleteForever className='text-gray-700' size={'20px'}/> </div>
+            }><MdOutlineEditNote className='text-gray-700' size={'20px'} /> </button>
+            <div className='p-2 rounded-md cursor-pointer text-white' onClick={() => handleDeleteTest(params.row)}><MdDeleteForever className='text-gray-700' size={'20px'} /> </div>
           </div>
         )
       }
     },
   ];
-  
+
   let rows: GridRowsProp = [];
 
-  if (data!=null){
-    let {result}:any = data
+  if (data != null) {
+    let { result }: any = data
     const filteredData = result?.items.map(item => ({
-      ID:item.id,
+      ID: item.id,
       nameAR: item.nameAR,
       nameEN: item.nameEN,
       photoPath: item.photoPath,
       isActive: item.isActive
     }));
-    rows=[...filteredData]
-    // console.log(result)
-    // setItems(result.items)
-    // console.log(rows);
+    rows = [...filteredData]
   }
 
   useEffect(() => {
@@ -90,14 +205,14 @@ const Brands = () => {
 
   useEffect(() => {
     fetchData();
-  }, [modalIsOpen])
+  }, [modalIsOpen, activeRes, deleteRes])
 
   return (
     <>
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
 
-      {data && 
+      {data &&
 
         <div className='p-2'>
           <div>
@@ -122,7 +237,7 @@ const Brands = () => {
 
           {modalIsOpen && <ModalComponent inputs={BrandInput} subtitle='Brand' isOpen={modalIsOpen} setIsOpen={setIsOpen} path='Brand/CreateBrand' initialValues={BrandsinitialValues} />}
 
-          {updateModalIsOpen&& <UpdateModal isOpen={updateModalIsOpen} setIsOpen={setUpdateIsOpen} subtitle={'Brand'} path='Brand/FindBrand' ID={IDUpdate} inputs={BrandInput}/>}
+          {updateModalIsOpen && <UpdateModal isOpen={updateModalIsOpen} setIsOpen={setUpdateIsOpen} subtitle={'Brand'} path='Brand/FindBrand' ID={IDUpdate} inputs={BrandInput} />}
 
 
         </div>

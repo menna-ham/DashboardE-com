@@ -127,7 +127,7 @@ const UpdateModal = ({ isOpen, setIsOpen, subtitle, path, ID, inputs }) => {
       >
         <button className='float-end' onClick={handleClose}><AiOutlineClose />  </button>
 
-        <h2 className='Font-bold text-xl text-blue-500 ' ref={(_subtitle) => (subtitle = _subtitle)}>Update {subtitle} {Item.nameAR}</h2>
+        <h2 className='Font-bold text-xl text-blue-500 ' ref={(_subtitle) => (subtitle = _subtitle)}>Update {subtitle} {Item?.nameAR}</h2>
 
         <Formik
 

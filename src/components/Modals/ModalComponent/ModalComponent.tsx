@@ -8,6 +8,7 @@ import useFetch from '../../../utils/useFetch.tsx';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { successfulAlert } from '../SuccessfulModal/SuccessfulModal.js';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 
 const customStyles = {
@@ -26,13 +27,15 @@ const customStyles = {
 
 const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) => {
   let { data, loading, error, fetchData } = useFetch('post', path)
-  let [Success, setSuccess] = useState(false)
+  let [Success, setSuccess] = useState(false);
+
   const validationSchema = Yup.object().shape(
     inputs.reduce((schema, input) => {
       schema[input.name] = input.validation;
       return schema;
     }, {})
   );
+  
   const MySwal = withReactContent(Swal)
 
     function afterOpenModal() {
@@ -49,13 +52,13 @@ const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) 
       formData.append('nameEN', values.nameEN);
       formData.append('formFile', values.formFile);
       // formData.append('FormFile', values.isActive); //adding for create 
-      console.log(formData.getAll('NameAR'));
+      console.log(formData);
         
       try {
         let res:any = await fetchData(formData)
         console.log(res);
         setSuccess(res?.isSuccess);
-        if(res?.isSuccess)
+        if(data)
           {
            successfulAlert('brand added')
             closeModal()
@@ -133,28 +136,28 @@ const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) 
                       <ErrorMessage name={input.name} component="div" className='text-sm text-red-500' />
                     </div>
                   );
-                // case 'radio':
+                case 'radio':
 
-                //   return (
-                //     <div key={input.name} className='flex flex-row gap-3 items-center  h-full mt-4'>
+                  return (
+                    <div key={input.name} className='flex flex-row gap-3 items-center  h-full mt-4'>
                       
-                //       {
-                //         input.options.map((option) => (
-                //           <div key={option.value} className='flex flex-row gap-1  justify-center my-auto'>
-                //           <Field
-                //             type="radio"
-                //             id={`${input.name}_${option.value}`}
-                //             name={input.name}
-                //             checked={values[input.name] === option.value}
-                //             onChange={() => setFieldValue(input.name, option.value)}
-                //           />
-                //             <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent" htmlFor={`${input.name}_${option.value}`}>{option.label}</label>
-                //         </div>
+                      {
+                        input.options.map((option) => (
+                          <div key={option.value} className='flex flex-row gap-1  justify-center my-auto'>
+                          <Field
+                            type="radio"
+                            id={`${input.name}_${option.value}`}
+                            name={input.name}
+                            checked={values[input.name] === option.value}
+                            onChange={() => setFieldValue(input.name, option.value)}
+                          />
+                            <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white bg-transparent" htmlFor={`${input.name}_${option.value}`}>{option.label}</label>
+                        </div>
 
-                //         ))
-                //       }
-                //     </div>
-                //   )
+                        ))
+                      }
+                    </div>
+                  )
                 default:
                   return null;
               }
@@ -194,7 +197,7 @@ const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) 
 
           <div className='flex gap-2 mt-5 justify-end'>
 
-          <button type='submit' disabled={isSubmitting ||Object.entries(errors).length > 0 || isSubmitting ||(Object.keys(initialValues).length === 0 && Object.keys(values).length === 0 )} className='bg-blue-400 p-2 rounded-lg text-white font-bold'> {isSubmitting?'Adding': 'create'}</button>
+          <button type='submit' disabled={isSubmitting ||Object.entries(errors).length > 0 || isSubmitting ||(Object.keys(initialValues).length === 0 && Object.keys(values).length === 0 )} className='bg-blue-400 p-2 rounded-lg text-white font-bold'> {loading  ?<AiOutlineLoading3Quarters className="spinner"/>: 'create'}</button>
 
           <button type='reset' onClick={closeModal} className='bg-red-400 p-2 rounded-lg text-white font-bold'> Cancel</button>
           </div>
