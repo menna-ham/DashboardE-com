@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 
 const Brands = () => {
   let { data, loading, error, fetchData } = useFetch('get', 'Brand/GetAllBrand')
-  let { data:activeRes, loading:activeLoad, error:activeError, fetchData:activeFun } = useFetch('put', 'Brand/ToggleAvtiveBrand')
+  let { data:activeRes, loading:activeLoad, error:activeError, fetchData:activeFun } = useFetch('put', 'Brand/ToggleActiveBrand')
   let { data:deleteRes, loading:deleteLoad, error:deleteError, fetchData:deleteFun } = useFetch('delete', 'Brand/DeleteBrand')
   let [modalIsOpen, setIsOpen] = useState(false);
   let [IDUpdate, setIDUpdate] = useState('');
