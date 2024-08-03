@@ -35,11 +35,11 @@ const Brands = () => {
   };
 
 
-  let handleDelete = (row) => {
-    console.log('delete', row);
-    let formatData = new FormData();
-    formatData.append("ID",row.ID)
 
+  let handleDelete = async (row:any) => {
+    console.log(row.ID)
+    let formatData:any = new FormData()
+    formatData.append("ID",row.ID)
     Swal.fire({
       title: "Are you sure you want to delete "+ row.nameEN+"?",
       text: "You won't be able to revert this!",
@@ -48,78 +48,30 @@ const Brands = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-      // preConfirm: async () => {
-      //   console.log('preconfirm');
-        
-      //   try {
-      //     await deleteFun(row.ID);
-      //     console.log('insideTry', deleteRes)
-      //     if (deleteRes?.isSuccess) {
-      //       console.log('yes deleted', deleteRes);
-      //       // setRows((prevRows) => prevRows.filter((r) => r.id !== row.id));
-      //       Swal.fire({
-      //         title: 'Deleted!',
-      //         text: 'Your file has been deleted.',
-      //         icon: 'success',
-      //       });
-      //     }
-      //   } catch (deleteRes) {
-      //     console.error('Error deleting row:', deleteRes);
-      //     Swal.fire({
-      //       title: 'Error!',
-      //       text: 'There was an error deleting your file.',
-      //       icon: 'error',
-      //     });
-      //   } 
-      // },
-    }).then(async(result) => {
-      if (result.isConfirmed) {
-        console.log('confirmed')
-        Swal.fire({
-          title: 'Deleted!',
-          text: 'Your file has been deleted.',
-          icon: 'success',
-        });
-        try {
-          await deleteFun(row.ID);
-          if (deleteRes?.isSuccess) {
-            console.log('yes deleted', deleteRes);
-            // setRows((prevRows) => prevRows.filter((r) => r.id !== row.id));
-            Swal.fire({
+
+      }).then(async(result) => {
+        if (result.isConfirmed) {
+          try {
+            await deleteFun(row.ID);
+            console.log('insideTry', deleteRes)
+            if (deleteRes?.isSuccess) {
+              console.log('yes deleted', deleteRes);
+             Swal.fire({
               title: 'Deleted!',
               text: 'Your file has been deleted.',
               icon: 'success',
             });
           }
-        } catch (error) {
-          console.error('Error deleting row:', error);
-          Swal.fire({
-            title: 'Error!',
-            text: 'There was an error deleting your file.',
-            icon: 'error',
-          });
-        } 
+        } catch (deleteRes) {
+            console.error(' Test Error deleting row:', deleteRes);
+            Swal.fire({
+              title: 'Error!',
+              text: 'There was an error deleting your file.',
+              icon: 'error',
+            });
+          } 
         }
-  })
-
-  };
-
-  let handleDeleteTest = async (row:any) => {
-    console.log(row.ID)
-    let formatData:any = new FormData()
-    formatData.append("ID",row.ID)
-    // console.log('formatData',formatData.get('ID'))
-   try {
-          await deleteFun(row.ID);
-          console.log('insideTry', deleteRes)
-          if (deleteRes?.isSuccess) {
-            console.log('yes deleted', deleteRes);
-
-        }
-      } catch (deleteRes) {
-          console.error('Error deleting row:', deleteRes);
-        
-        } 
+      })
    }
   
 
@@ -178,7 +130,7 @@ const Brands = () => {
             <div className=' p-2 rounded-md cursor-pointer text-white'><MdViewInAr className='text-gray-700' size={'20px'} /></div>
             <button className=' p-2 rounded-md cursor-pointer text-white' onClick={() => handleEdit(params.row)
             }><MdOutlineEditNote className='text-gray-700' size={'20px'} /> </button>
-            <div className='p-2 rounded-md cursor-pointer text-white' onClick={() => handleDeleteTest(params.row)}><MdDeleteForever className='text-gray-700' size={'20px'} /> </div>
+            <div className='p-2 rounded-md cursor-pointer text-white' onClick={() => handleDelete(params.row)}><MdDeleteForever className='text-gray-700' size={'20px'} /> </div>
           </div>
         )
       }

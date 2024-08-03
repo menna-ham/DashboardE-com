@@ -22,23 +22,21 @@ const SideTest = ({
         display: "flex",
         height: "100%",
         minHeight: "400px",
-        // padding: "20px",
+        // padding: "10px",
       }}
     >
       <Sidebar
+        backgroundColor='#E7EBF3'
         collapsed={collapseSideBar}
         toggled={toggled}
         onBackdropClick={() => setToggled(false)}
         customBreakPoint="800px"
         onBreakPoint={setBroken}
+        
         rootStyles={{
-          // background: "#FFFFFF !important",
-          background: "pink !important",
           border:'none',
-          // paddingLeft: '20px',
-          paddingTop:'20px',
-
-          // boxShadow:'0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
+          paddingLeft:'10px',
+          backgroundColor:'#E7EBF3'
         }}
       >
         {/* <div className=" absolute right-0">
@@ -46,18 +44,19 @@ const SideTest = ({
         </div> */}
 
         <Menu
+        
           menuItemStyles={{
             button: {
-              transition:'.5s',
+              transition:'.2s',
               position: 'relative',
               [`&.active`]: {
                 backgroundColor:'#f8f7fa',
-                color: "black",
-                // paddingLeft:'20px',
-                //curved outside
-                borderRadius: "1.25rem",
+                color: "#826DEA",
+                borderRadius: "1.5rem",
                 borderEndEndRadius:'0rem',
                 borderTopRightRadius:'0rem',
+                borderLeft:'solid 2px',
+                borderLeftColor:'#654ce6',
                 // marginLeft:'2rem',
               },
               ['&.active::before']: {
@@ -84,11 +83,9 @@ const SideTest = ({
 
               },
               '&:hover': {
-                // backgroundColor: 'green',
-                borderRadius: "1.25rem",
+                borderRadius: "1.5rem",
                 borderEndEndRadius:'0rem',
                 borderTopRightRadius:'0rem',
-                // marginLeft:'2rem',
               },
               
             },
