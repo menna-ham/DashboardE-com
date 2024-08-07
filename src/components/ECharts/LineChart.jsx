@@ -38,11 +38,12 @@ const LineChart = ({color,bgColor}) => {
         },
         series: [
           {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: [10, 15, 8, 12, 10, 18],
             type: 'line',
             smooth: true,
             color: color,
             showSymbol: false ,
+            style:{ width: "100%", height: "100%" },
             areaStyle: {
                 color: {
                   type: 'linear',
@@ -62,9 +63,12 @@ const LineChart = ({color,bgColor}) => {
       };
     
     return (
-            // <div>
-                <ReactECharts style={{width:'200px', height:'200px'}} option={eChartsOption} />
-            // </div>
+            <div className='w-full h-full  bg-pink-700'>
+                <ReactECharts 
+
+                style={{width:'100%', height:'100%'}} 
+                option={eChartsOption} />
+            </div>
             
     )
 }

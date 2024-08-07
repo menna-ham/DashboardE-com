@@ -4,7 +4,7 @@ import { IoMdArrowUp } from "react-icons/io";
 
 const ChartCard = ({bgColor,color, label, icon, value}) => {
   return (
-    <div style={{backgroundColor:bgColor}} className='w-full h-full flex flex-col flex-wrap  rounded-2xl p-2'>
+    <div style={{backgroundColor:bgColor}} className='h-full rounded-2xl p-2'>
 
     <div className="nums flex flex-row flex-wrap justify-between items-center">
       <div className='flex flex-row gap-1 items-center'>
@@ -18,10 +18,10 @@ const ChartCard = ({bgColor,color, label, icon, value}) => {
       </div>
     </div>
 
-    <div className=' h-[35%] bg-black flex flex-row flex-wrap '>
+    <div className='h-fit'>
 
         <p style={{color:color}} className='font-semibold '> {label}</p>
-        <div className='h-full w-full flex justify-center items-center '>
+        <div className='m-auto'>
          <LineChart color={color} bgColor={bgColor}/>
         </div>
     </div>

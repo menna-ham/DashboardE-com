@@ -19,12 +19,15 @@ const Home = () => {
       {/* <Sec1/>
       <Charts1/> */}
 
-      <div className='flex flex-wrap flex-col md:flex-row bg-teal-600 h-full'>
-        <div className="md:w-[70%]">
-          <div className='charts '>
-//grid grid-cols-3
-            <div className="flex flex-row flex-wrap gap-1 bg-pink-500">
-              <div className='h-full w-1/3'>
+      <div className='flex flex-col flex-wrap  md:flex-row bg-teal-600 h-[100%]'>
+
+        <div className="md:w-[70%] flex flex-col">
+
+          <div className='charts h-[25%]'>
+
+            <div className="flex flex-row flex-nowrap gap-2 bg-pink-500">
+              
+              <div className='w-1/3'>
                 <ChartCard bgColor={'#EDEAFF'} color={'#7A65E9'} label={'Total Revenue'} icon={<LuCircleDollarSign size={'20px'} />} value={'4,8/5'} />
               </div>
  
@@ -39,8 +42,9 @@ const Home = () => {
 
 
           </div>
+
           <div>
-            ss
+            ssww
           </div>
 
 
