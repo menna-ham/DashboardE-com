@@ -1,16 +1,14 @@
 import React from 'react'
-import ReactEChartsCore from 'echarts-for-react/lib/core';
-import echarts from 'echarts/lib/echarts';
 import ReactECharts from 'echarts-for-react';
-import { color } from 'echarts';
 
 
 const LineChart = ({color,bgColor}) => {
     let eChartsOption = {
         backgroundColor: 'transparent', // Set background to transparent
+        // backgroundColor: 'green', // Set background to transparent
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','oct','nov'],
           axisLine: {
             show: false // Hide x-axis line
           },
@@ -24,7 +22,7 @@ const LineChart = ({color,bgColor}) => {
         yAxis: {
           type: 'value',
           axisLine: {
-            show: false // Hide y-axis line
+            // show: false // Hide y-axis line
           },
           axisTick: {
             show: false // Hide y-axis ticks
@@ -38,12 +36,15 @@ const LineChart = ({color,bgColor}) => {
         },
         series: [
           {
-            data: [10, 15, 8, 12, 10, 18],
+            data: [30, 45, 28, 40, 35, 50, 45, 55, 60,55,70],
             type: 'line',
             smooth: true,
             color: color,
             showSymbol: false ,
-            style:{ width: "100%", height: "100%" },
+            lineStyle: {
+              width: 4, // Set the line width to 4 pixels
+          },
+            style:{ width: "100%", height: "100%" , },
             areaStyle: {
                 color: {
                   type: 'linear',
@@ -63,7 +64,7 @@ const LineChart = ({color,bgColor}) => {
       };
     
     return (
-            <div className='w-full h-full  bg-pink-700'>
+            <div className='w-full h-full' >
                 <ReactECharts 
 
                 style={{width:'100%', height:'100%'}} 

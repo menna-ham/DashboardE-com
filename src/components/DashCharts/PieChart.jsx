@@ -32,6 +32,7 @@
 
 import React, { useRef, useState } from 'react'
 import ReactECharts from 'echarts-for-react'; 
+import { Box, Stack, Typography } from '@mui/material';
 
 function PieChart() {
     const seriesData = [
@@ -106,7 +107,8 @@ function PieChart() {
       };
 
   return (
-    <>d</>
+    <></>
+    // <>d</>
     // <div className='bg-white '>
 
     //     <ReactECharts  option={option}/>
@@ -131,21 +133,21 @@ function PieChart() {
     //           >
     //             <Stack direction="row" alignItems="center" gap={1} width={1}>
     //               <Box
-    //                 sx={{
-    //                   width: 10,
-    //                   height: 10,
-    //                   bgcolor: visitorType[`${dataItem.name}`]
-    //                     ? 'action.disabled'
-    //                     : pieChartColors[index],
-    //                   borderRadius: 400,
-    //                 }}
+    //                 // sx={{
+    //                 //   width: 10,
+    //                 //   height: 10,
+    //                 //   bgcolor: visitorType[`${dataItem.name}`]
+    //                 //     ? 'action.disabled'
+    //                 //     : pieChartColors[index],
+    //                 //   borderRadius: 400,
+    //                 // }}
     //               ></Box>
     //               <Typography variant="body1" color="text.secondary" flex={1} textAlign={'left'}>
     //                 {dataItem.name}
     //               </Typography>
-    //               <Typography variant="body1" color="text.primary">
+    //               {/* <Typography variant="body1" color="text.primary">
     //                 {((parseInt(`${dataItem.value}`) / totalVisitors) * 100).toFixed(0)}%
-    //               </Typography>
+    //               </Typography> */}
     //             </Stack>
     //           </button>
     //         ))}

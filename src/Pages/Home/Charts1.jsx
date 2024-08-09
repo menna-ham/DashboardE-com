@@ -28,7 +28,7 @@ const Charts1 = () => {
               data: [20, 125, 100, 30, 150, 300, 90, 180],
               borderColor: 'rgb(22,163,74)',
               backgroundColor: 'rgb(22,163,74)',
-              borderRdius:'circle',
+              borderRadius:'circle',
               tension:0.3,
               borderJoinStyle:'bevel',
               borderWidth:'5'
