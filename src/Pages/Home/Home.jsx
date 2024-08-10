@@ -5,6 +5,8 @@ import Sec1 from './Sec1';
 import PieChart from '../../components/ECharts/PieChart';
 import DynamicChart from '../../components/ECharts/DynamicChart';
 import HorizontalBarChart from '../../components/ECharts/HorizontalBarChart';
+import GradientYAxisChart from '../../components/ECharts/GradientYAxisChart';
+import RecentOrders from './RecentOrders';
 
 
 
@@ -44,6 +46,17 @@ const Home = () => {
             <div className='bg-white rounded-2xl shadow-md md:w-2/3'>
               <HorizontalBarChart/>
             </div>
+          </div>
+
+          <div className='bg-white p-2 rounded-2xl shadow-md'>
+            <p className='text-xl font-semibold'>Recent 10 Orders</p>
+            <div>
+              <RecentOrders/>
+            </div>
+          </div>
+
+          <div className='bg-white p-2 rounded-2xl shadow-md'>
+            <GradientYAxisChart/>
           </div>
 
 
