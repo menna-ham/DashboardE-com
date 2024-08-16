@@ -4,6 +4,11 @@ import ReactECharts from 'echarts-for-react';
 
 const PieChart = () => {
     let option = {
+        legend: {
+            bottom: '0%',  // Move the legend to 20% above the bottom of the container
+            left: 'center',
+            orient: 'horizontal',  // Keep the legends in a row
+        },
         tooltip: {
             trigger: 'item'
         },

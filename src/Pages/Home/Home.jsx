@@ -1,12 +1,11 @@
 import React from 'react'
 import ChartsSec from './ChartsSec';
-import Charts1 from './Charts1';
-import Sec1 from './Sec1';
 import PieChart from '../../components/ECharts/PieChart';
 import DynamicChart from '../../components/ECharts/DynamicChart';
 import HorizontalBarChart from '../../components/ECharts/HorizontalBarChart';
 import GradientYAxisChart from '../../components/ECharts/GradientYAxisChart';
 import RecentOrders from './RecentOrders';
+import EarningSec from './EarningSec';
 
 
 
@@ -15,9 +14,6 @@ const Home = () => {
 
   return (
     <div >
-      {/* old home */}
-      {/* <Sec1/>
-      <Charts1/> */}
 
       <div className='flex flex-col gap-3 md:flex-row  h-[100%]'>
 
@@ -65,7 +61,7 @@ const Home = () => {
 
 
         <div className="earnings md:w-[30%] bg-teal-500">
-          earnings
+          <EarningSec/>
         </div>
 
       </div>
