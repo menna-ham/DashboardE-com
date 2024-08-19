@@ -3,6 +3,7 @@ import { Form, Link, Router, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { ErrorMessage, Field, Formik } from 'formik';
 import * as Yup from 'yup'
+// import useFetch from '../../utils/useFetch';
 // import { useHistory } from 'react-router-dom';
 
 
@@ -12,8 +13,9 @@ const Login = ({ getUserToken }) => {
     userName: '',
     password: '',
     rememberMe: true,
-  })
+  });
   const [isLoading, setIsLoading] = useState(false);
+  // let {data, loading, error, fetchData} = useFetch('post','User/Login')
   // const history = useHistory();
 
 
@@ -42,14 +44,23 @@ const Login = ({ getUserToken }) => {
 
 
   const handleSubmit = async (values) => {
+    let formData = new FormData()
+    formData.append('userName', values.userName);
+    formData.append('password', values.password);
+    formData.append('rememberMe', values.rememberMe);
+    console.log({...values})
     try {
       setIsLoading(true);
       let {userName,password,rememberMe} = {...values}
-      
-      const { data } = await axios.post(
-        'https://ecomerce.runasp.net/api/User/Login',
-        { ...values }
+      const { data } = await axios.post('https://ecomerce.runasp.net/api/User/Login',
+        { ...values },{headers:{
+          // "Content-Type":'application/json-patch+json',
+          'Accept':'text/plain',
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        }}
       );
+      console.log(data)
       localStorage.setItem('loginToken', data?.result?.token);
       if (data.isSuccess) {
         navigate('/')
@@ -61,6 +72,19 @@ const Login = ({ getUserToken }) => {
 
     } 
   };
+
+  // let handleSubmit= async(values)=>{
+  //   let formData = new FormData()
+  //   formData.append('userName', values.userName);
+  //   formData.append('password', values.password);
+  //   formData.append('rememberMe', values.rememberMe);
+  //   try{
+  //     await fetchData(formData)
+  //     console.log(data)
+  //   }catch{
+  //     console.log(error)
+  //   }
+  // }
 
   // let trySubmit= ()=>{
   //   console.log('try submitting');

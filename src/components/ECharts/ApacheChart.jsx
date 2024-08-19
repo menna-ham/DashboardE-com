@@ -4,7 +4,7 @@ import ReactECharts from 'echarts-for-react';
 const ApacheChart = () => {
   const option = {
     legend: {
-        bottom: '2', // Adjusted to move the legend closer to the bottom
+        bottom: '0', // Adjusted to move the legend closer to the bottom
         left: 'center', // Center the legend horizontally
         itemWidth: 15, // Adjust the size of the legend symbols
         itemHeight: 10, // Adjust the height of the legend symbols
@@ -25,11 +25,14 @@ const ApacheChart = () => {
       {
         name: 'Apache  Chart',
         type: 'pie',
-        radius: ['30%', '80%'],
+        radius: ['20%', '60%'],
         center: ['50%', '50%'],
         roseType: 'area',
         itemStyle: {
           borderRadius: 9
+        },
+        label: {
+          fontSize: 9
         },
         data: [
           { value: 40, name: 'rose 1' },
@@ -46,8 +49,8 @@ const ApacheChart = () => {
   };
 
   return (
-    <div className='bg-blue-400 ' style={{ width: '100%',height:'200%', margin: '0 auto' }}>
-      <ReactECharts option={option} style={{ height: '250%', width: '100%' }} />
+    <div className='' style={{ width: '100%',height:'250%', margin: '0 auto' }}>
+      <ReactECharts option={option} style={{ width: '100%' }} />
     </div>
   );
 };

@@ -62,6 +62,7 @@ const Home = () => {
 
         <div className="earnings md:w-[30%] bg-teal-500">
           <EarningSec/>
+          
         </div>
 
       </div>

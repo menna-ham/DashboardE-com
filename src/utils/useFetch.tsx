@@ -1,11 +1,11 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-type Props = {
-    endpoint: string,
-    method: string
-    body: {}
-}
+// type Props = {
+//     endpoint: string,
+//     method: string
+//     body: {},
+// }
 
 const useFetch = (method,endpoint) => {
 
@@ -25,20 +25,27 @@ const useFetch = (method,endpoint) => {
 
             switch (method) {
                 case 'get':
+                    
                     response = await axios.get(api, {
                         headers: {
-                            Authorization: `Bearer ${loginToken}`
+                            Authorization: `Bearer ${loginToken}`,
+                            "Access-Control-Allow-Origin": "*",
+                            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                         }
                     });
+                    console.log(response)
                     setData(response.data);
                     
                     break;
 
                 case 'post':
+                    console.log()
                     response = await axios.post(api,body,{
                         headers: {
                             Authorization: `Bearer ${loginToken}`,
-                            "Content-Type":'multipart/form-data'
+                            "Content-Type":'application/json-patch+json',
+                            "Access-Control-Allow-Origin": "*",
+                            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                         },
                     });
                     // response = await axios.post(api,{
