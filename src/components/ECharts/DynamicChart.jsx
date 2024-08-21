@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 
 const DynamicChart = () => {
@@ -7,6 +7,7 @@ const DynamicChart = () => {
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
   const [count, setCount] = useState(11);
+  const chartRef = useRef(null);
 
   useEffect(() => {
     const initializeData = () => {
@@ -53,6 +54,17 @@ const DynamicChart = () => {
     return () => clearInterval(intervalId);
   }, [count]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (chartRef.current) {
+        chartRef.current.getEchartsInstance().resize();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const option = {
     title: {
       text: 'Dynamic Data',
@@ -67,14 +79,6 @@ const DynamicChart = () => {
       },
     },
     legend: {},
-    toolbox: {
-      show: true,
-      feature: {
-        dataView: { readOnly: false },
-        restore: {},
-        saveAsImage: {},
-      },
-    },
     dataZoom: {
       show: false,
       start: 0,
@@ -143,7 +147,25 @@ const DynamicChart = () => {
     ],
   };
 
-  return <ReactECharts option={option} style={{ height: '400px', width: '100%' }} />;
+  return     <div
+  style={{
+    width: '100%',
+    height: '100%',
+    maxWidth: '1200px', // Maximum width for large screens
+    margin: '0 auto', // Center the chart horizontally
+  }}
+>
+  <ReactECharts
+    ref={chartRef}
+    option={option}
+    style={{
+      height: '400px', // Default height
+      width: '100%',
+    }}
+    notMerge={true}
+    lazyUpdate={true}
+  />
+</div>;
 };
 
 export default DynamicChart;
