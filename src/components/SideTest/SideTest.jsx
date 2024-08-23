@@ -21,7 +21,7 @@ const SideTest = ({
       style={{
         display: "flex",
         height: "100%",
-        minHeight: "400px",
+        // minHeight: "400px",
         // padding: "10px",
       }}
     >

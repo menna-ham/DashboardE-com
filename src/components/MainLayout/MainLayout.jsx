@@ -23,7 +23,7 @@ const MainLayout = () => {
          setToggled={setToggled}
          setBroken={setBroken}
       />
-      <main style={{ flex: 1, padding: 10 }}>
+      <main className="w-fit" style={{ flex: 1, padding: 10 }}>
         <div>
           <Navbar
             collapseSideBar={collapseSideBar}
