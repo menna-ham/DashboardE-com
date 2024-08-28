@@ -12,6 +12,9 @@ import Login from './Pages/Login/Login';
 import SignUp from './Pages/SignUp/SignUp';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from "jwt-decode";
+import { Routes, Route } from 'react-router-dom';
+import PrivateRoutes from './utils/PrivateRoutes.jsx'
+import {PublicRoutes} from './utils/PrivateRoutes.jsx'
 
 
 function App() {
@@ -74,7 +77,17 @@ function App() {
    
   ]);
   return (
-    <RouterProvider router={router}/>
+    <Routes>
+      <Route element={<PrivateRoutes />}>
+        <Route element={<Home />} path='/' />
+        {/* <Route element={<ErrorComp />} path='*' /> */}
+      </Route>
+      {/* <Route element={<PublicRoutes />}>
+        <Route element={<Login />} path='/login' />
+      </Route> */}
+    </Routes>
+
+    // <RouterProvider router={router}/>
   
   );
 }
