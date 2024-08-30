@@ -54,16 +54,16 @@ const DynamicChart = () => {
     return () => clearInterval(intervalId);
   }, [count]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (chartRef.current) {
-        chartRef.current.getEchartsInstance().resize();
-      }
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     if (chartRef.current) {
+  //       chartRef.current.getEchartsInstance().resize();
+  //     }
+  //   };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
 
   const option = {
     title: {

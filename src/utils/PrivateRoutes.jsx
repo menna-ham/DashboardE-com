@@ -4,13 +4,14 @@ import MainLayout from '../components/MainLayout/MainLayout'
 
 function PrivateRoutes() {
     const token = useAuth()
-    return token ? <Outlet /> : <Navigate to='/login' />
+    console.log('private routes', token)
+    return token ? <MainLayout /> : <Navigate to='/login' />
 }
 
 
 export function PublicRoutes() {
     const token = useAuth()
-    return token ? <Navigate to='/' /> : <Outlet />
+    return token ? <Navigate to='/' /> : <MainLayout />
 }
 
 export default PrivateRoutes

@@ -80,11 +80,19 @@ function App() {
     <Routes>
       <Route element={<PrivateRoutes />}>
         <Route element={<Home />} path='/' />
+        <Route element={<Brands />} path='/brands' />
+        <Route element={<Categories />} path='/categories' />
+        <Route element={<Users />} path='/users' />
         {/* <Route element={<ErrorComp />} path='*' /> */}
       </Route>
-      {/* <Route element={<PublicRoutes />}>
+      <Route element={<Login />} path='/login' />
+
+      <Route element={<PublicRoutes />}>
         <Route element={<Login />} path='/login' />
-      </Route> */}
+        <Route element={<Login />} path='/register' />
+        <Route element={<Home />} path='/' />
+      </Route>
+
     </Routes>
 
     // <RouterProvider router={router}/>
