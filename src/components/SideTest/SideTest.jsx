@@ -7,6 +7,7 @@ import { HiUsers } from "react-icons/hi";
 import { SiBrandfolder } from "react-icons/si";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
+import { LuBox } from "react-icons/lu";
 
 const SideTest = ({
   collapseSideBar,
@@ -98,6 +99,7 @@ const SideTest = ({
           </MenuItem>
           <MenuItem icon={<LuLayoutDashboard />} className='.curved-item' component={<NavLink  to="/" />}> Dashboard</MenuItem>
           <MenuItem icon={<SiBrandfolder />} component={<NavLink to="/brands" />}> Brands</MenuItem>
+          <MenuItem icon={<LuBox />} component={<NavLink to="/products" />}> Products</MenuItem>
           <MenuItem icon={<HiUsers />} component={<NavLink to="/users" />}> Users</MenuItem>
           <MenuItem icon={<BiCategory />} component={<NavLink to="/categories" />}>
             {" "}
