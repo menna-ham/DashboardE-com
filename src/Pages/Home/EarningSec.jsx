@@ -3,16 +3,69 @@ import ApacheChart from '../../components/ECharts/ApacheChart'
 import { SiNike, SiDior, SiZara } from "react-icons/si";
 import { PiShirtFoldedFill } from "react-icons/pi";
 import { GiSonicShoes, GiSkirt } from "react-icons/gi";
+import UpdateDate from './UpdateDate';
+import LineChart from '../../components/ECharts/LineChart';
+
 
 const EarningSec = () => {
   return (
     <div className='flex flex-col gap-3 bg-white rounded-lg p-1 '>
+
+      <div className="bg-[#F7F6FB] rounded-2xl p-2 shadow-md">
+        <UpdateDate/>
+      </div>
+
+      <div className='bg-[#F7F6FB]  rounded-2xl shadow-md p-2'>
+        <div className='flex flex-row justify-between items-center'>
+          <p className='text-gray-700 font-bold text-xl'>Your Earnings</p>
+          <div>
+            <LineChart className='w-[100%]' color={'#F98A6D'} bgColor={'#fceae6'}/>
+          </div>
+
+        </div>
+
+        <div className='flex flex-row justify-center'>
+
+          <div className=' bg-[#F7F6FB] p-4 py-5 shadow-md border-2 w-fit border-[#6259C7] rounded-full'>
+          <p className='text-gray-400 text-sm text-center mb-2'>Available</p>
+          <p className='text-3xl text-[#6259C7] font-bold'>$167</p>
+
+          </div>
+        </div>
+
+        <div className='py-2 flex flex-row justify-between items-center text-center'>
+          <div >
+            <p className='text-gray-400 font-semibold text-sm'>Today Earning</p>
+            <p className='text-2xl font-semibold'>$15,010</p>
+          </div>
+
+          <div >
+            <p className='text-gray-400 font-semibold text-sm'>Pending</p>
+            <p className='text-2xl font-semibold'>$58</p>
+          </div>
+
+          <div >
+            <p className='text-gray-400 font-semibold text-sm'>In Review</p>
+            <p className='text-2xl font-semibold'>$70</p>
+          </div>
+
+        </div>
+
+        <div>
+          Withdraw
+        </div>
+
+      </div>
 
       <div className='bg-[#F7F6FB]  rounded-2xl shadow-md'>
         <ApacheChart />
 
       </div>
 
+      {/* Top Products Scrolling */}
+
+
+      {/* Top Brands */}
       <div className="topbrands p-2 bg-[#F7F6FB]  rounded-2xl shadow-md">
         <div>
           <p className='font-semibold text-lg mb-2'>Top Brands for This Month</p>
@@ -86,7 +139,7 @@ const EarningSec = () => {
 
       </div>
 
-
+      {/* Top Category */}
       <div className="topcategory p-2 bg-[#F7F6FB]  rounded-2xl shadow-md">
         <div>
           <p className='font-semibold text-lg mb-2'>Top Categories for This Month</p>
@@ -100,8 +153,8 @@ const EarningSec = () => {
             </div>
 
             <div className=' w-[60%]'>
-              <div class="w-full h-8  bg-white rounded-lg dark:bg-gray-700">
-                <div class="h-8  bg-[#A273FE] text-xs font-medium text-blue-100 text-start p-1 my-auto leading-none rounded-lg w-[75%]" > 
+              <div className="w-full h-8  bg-white rounded-lg dark:bg-gray-700">
+                <div className="h-8  bg-[#A273FE] text-xs font-medium text-blue-100 text-start p-1 my-auto leading-none rounded-lg w-[75%]" > 
                   <div className='flex flex-row items-center gap-1 text-white py-1'><PiShirtFoldedFill size={'1rem'} /> 75%</div>
                 </div>
               </div>
@@ -118,8 +171,8 @@ const EarningSec = () => {
             </div>
 
             <div className=' w-[60%]'>
-              <div class="w-full h-8  bg-white rounded-lg dark:bg-gray-700">
-                <div class="h-8  bg-[#FE8543] text-xs font-medium text-blue-100 text-start p-1 my-auto leading-none rounded-lg w-[65%]" > 
+              <div className="w-full h-8  bg-white rounded-lg dark:bg-gray-700">
+                <div className="h-8  bg-[#FE8543] text-xs font-medium text-blue-100 text-start p-1 my-auto leading-none rounded-lg w-[65%]" > 
                   <div className='flex flex-row items-center gap-1 text-white py-1'><GiSonicShoes size={'1rem'} /> 65%</div>
                 </div>
               </div>
@@ -136,8 +189,8 @@ const EarningSec = () => {
             </div>
 
             <div className=' w-[60%]'>
-              <div class="w-full h-8  bg-white rounded-lg dark:bg-gray-700">
-                <div class="h-8  bg-[#FEC24C] text-xs font-medium text-blue-100 text-start p-1 my-auto leading-none rounded-lg w-[45%]" > 
+              <div className="w-full h-8  bg-white rounded-lg dark:bg-gray-700">
+                <div className="h-8  bg-[#FEC24C] text-xs font-medium text-blue-100 text-start p-1 my-auto leading-none rounded-lg w-[45%]" > 
                   <div className='flex flex-row items-center gap-1 text-white py-1'><GiSkirt size={'1rem'} /> 45%</div>
                 </div>
               </div>
@@ -214,6 +267,8 @@ const EarningSec = () => {
         </div>
 
       </div>
+
+      {/* Top Color */}
 
 
     </div>
