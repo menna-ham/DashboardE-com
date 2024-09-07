@@ -5,6 +5,7 @@ import { PiShirtFoldedFill } from "react-icons/pi";
 import { GiSonicShoes, GiSkirt } from "react-icons/gi";
 import UpdateDate from './UpdateDate';
 import LineChart from '../../components/ECharts/LineChart';
+import { PiSignInBold } from "react-icons/pi";
 
 
 const EarningSec = () => {
@@ -15,6 +16,7 @@ const EarningSec = () => {
         <UpdateDate/>
       </div>
 
+      {/* withdeow card */}
       <div className='bg-[#F7F6FB]  rounded-2xl shadow-md p-2'>
         <div className='flex flex-row justify-between items-center'>
           <p className='text-gray-700 font-bold text-xl'>Your Earnings</p>
@@ -51,8 +53,13 @@ const EarningSec = () => {
 
         </div>
 
-        <div>
-          Withdraw
+        <div className='flex flex-row justify-center p-2'>
+          <button className='bg-[#F89273] py-2 px-3 rounded-md rounded-ss-none font-semibold text-white flex flex-row justify-center items-center gap-2'>
+            <div className='p-1 bg-[#654CE6] rounded-md rounded-ss-none shadow-xl'>
+            <PiSignInBold className='rotate-90'/>
+            </div> 
+            Withdrow
+          </button>
         </div>
 
       </div>
