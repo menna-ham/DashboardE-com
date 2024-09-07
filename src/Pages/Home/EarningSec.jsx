@@ -6,6 +6,7 @@ import { GiSonicShoes, GiSkirt } from "react-icons/gi";
 import UpdateDate from './UpdateDate';
 import LineChart from '../../components/ECharts/LineChart';
 import { PiSignInBold } from "react-icons/pi";
+import ReactSlidy from 'react-slidy';
 
 
 const EarningSec = () => {
@@ -71,6 +72,12 @@ const EarningSec = () => {
 
       {/* Top Products Scrolling */}
 
+      <div>
+      <ReactSlidy numOfSlides={5}>
+        <div>1</div>
+        <div>1</div>
+      </ReactSlidy>
+      </div>
 
       {/* Top Brands */}
       <div className="topbrands p-2 bg-[#F7F6FB]  rounded-2xl shadow-md">

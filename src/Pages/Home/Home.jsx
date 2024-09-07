@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <div >
 
-      <div className='flex flex-row gap-3 md:flex-row-reverse sm:flex-col h-[100%]'>
+      <div className='flex flex-row gap-3 md:flex-row sm:flex-col h-[100%]'>
 
         <div className="md:w-[70%] flex flex-col gap-4">
 
@@ -29,7 +29,7 @@ const Home = () => {
 
           </div>
 
-          <div className='flex flex-row md:flex-row sm:flex-row gap-3'>
+          <div className='flex flex-row md:flex-row sm:flex-col gap-3'>
 
             <div className="pie bg-white p-2  rounded-2xl shadow-md md:w-1/3 ">
               <p className='font-semibold'>Statistice</p>

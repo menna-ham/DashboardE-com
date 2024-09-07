@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {store} from './Redux/Store';
 import { Provider } from 'react-redux'
+<link rel="stylesheet" href="https://unpkg.com/react-slidy/lib/styles.css" />
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
