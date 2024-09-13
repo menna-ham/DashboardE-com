@@ -7,6 +7,7 @@ import UpdateDate from './UpdateDate';
 import LineChart from '../../components/ECharts/LineChart';
 import { PiSignInBold } from "react-icons/pi";
 import ReactSlidy from 'react-slidy';
+import TopProducts, { Product } from './TopProducts';
 
 
 const EarningSec = () => {
@@ -72,11 +73,22 @@ const EarningSec = () => {
 
       {/* Top Products Scrolling */}
 
-      <div>
-      <ReactSlidy numOfSlides={5}>
+      <div className='p-2 bg-[#F7F6FB]  rounded-2xl shadow-md '>
+        <div>
+          <p className='font-semibold text-lg mb-2'>Top Products for This Month</p>
+        </div>
+
+        <div>
+          <Product/>
+        </div>
+
+
+        <TopProducts/>
+        
+      {/* <ReactSlidy numOfSlides={5}>
         <div>1</div>
         <div>1</div>
-      </ReactSlidy>
+      </ReactSlidy> */}
       </div>
 
       {/* Top Brands */}
