@@ -108,8 +108,9 @@ const TopProducts = () => {
         // modules={[Pagination]}
         className="mySwiper "
       >
-        <SwiperSlide className="relative">
-          <Product />
+=======
+        <SwiperSlide>
+          {/* <Product /> */}
         </SwiperSlide>
         <SwiperSlide>
           <img src="https://swiperjs.com/demos/images/nature-2.jpg" />

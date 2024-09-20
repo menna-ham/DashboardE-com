@@ -25,10 +25,10 @@ const useFetch = (method,endpoint) => {
 
             switch (method) {
                 case 'get':
-                    
                     response = await axios.get(api, {
                         headers: {
                             Authorization: `Bearer ${loginToken}`,
+                            "Content-Type":'text/plain',
                             "Access-Control-Allow-Origin": "*",
                             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                         }
@@ -104,6 +104,9 @@ const useFetch = (method,endpoint) => {
             setLoading(false);
         }
     };
+    // useEffect(()=>{
+    //     fetchData();
+    // },[])
     useEffect(() => {
         if (method === 'get') {
             fetchData();

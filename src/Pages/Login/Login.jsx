@@ -54,16 +54,17 @@ const Login = ({ getUserToken }) => {
       let {userName,password,rememberMe} = {...values}
       const { data } = await axios.post('https://ecomerce.runasp.net/api/User/Login',
         { ...values },{headers:{
-          // "Content-Type":'application/json-patch+json',
           'Accept':'text/plain',
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+          "Content-Type":'application/json-patch+json',
         }}
       );
       console.log('logging',data)
       localStorage.setItem('loginToken', data?.result?.token);
       if (data.isSuccess) {
-        navigate('/')
+        console.log('logged in')
+        // navigate('/')
+      }else{
+        console.log('error in login')
       }
       setIsLoading(false);
     } catch (error) {

@@ -39,7 +39,14 @@ const Products = () => {
       isActive: item.isActive
     }));
     rows = [...filteredData]
+  }else{
+    rows=[];
   }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
     <div className='p-2'>
       {loading && <div>Loading...</div>}
