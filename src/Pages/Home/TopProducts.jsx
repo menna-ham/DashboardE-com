@@ -108,7 +108,7 @@ const TopProducts = () => {
         // modules={[Pagination]}
         className="mySwiper "
       >
-=======
+
         <SwiperSlide>
           {/* <Product /> */}
         </SwiperSlide>
