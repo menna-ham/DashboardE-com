@@ -60,7 +60,7 @@ const Login = ({ getUserToken }) => {
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         }}
       );
-      console.log(data)
+      console.log('logging',data)
       localStorage.setItem('loginToken', data?.result?.token);
       if (data.isSuccess) {
         navigate('/')

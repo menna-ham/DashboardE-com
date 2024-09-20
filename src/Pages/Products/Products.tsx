@@ -24,6 +24,11 @@ const Products = () => {
   ]
   let rows: GridRowsProp = [];
 
+  
+  useEffect(() => {
+    fetchData()
+  }, [])
+  
   if (data != null) {
     let { result }: any = data
     const filteredData = result?.items.map(item => ({
@@ -35,11 +40,6 @@ const Products = () => {
     }));
     rows = [...filteredData]
   }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
   return (
     <div className='p-2'>
       {loading && <div>Loading...</div>}

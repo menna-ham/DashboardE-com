@@ -17,7 +17,7 @@ import styles from './product.module.css';
 
 export const Product = () => {
   return (
-    <>
+    <div className="relative">
       <div className={styles.container}>
         <div className={styles.overlay}>
           <div className={styles.items}></div>
@@ -59,14 +59,14 @@ export const Product = () => {
           </div>
         </div>
       </div> */}
-    </>
+    </div>
   );
 };
 
 const TopProducts = () => {
   return (
     <>
-      <Swiper
+      <Swiper 
         modules={[Navigation, Pagination, A11y, EffectCoverflow]}
         spaceBetween={50}
         pagination={{
@@ -108,7 +108,7 @@ const TopProducts = () => {
         // modules={[Pagination]}
         className="mySwiper "
       >
-        <SwiperSlide>
+        <SwiperSlide className="relative">
           <Product />
         </SwiperSlide>
         <SwiperSlide>

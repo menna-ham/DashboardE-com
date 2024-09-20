@@ -5,7 +5,7 @@ import MainLayout from '../components/MainLayout/MainLayout'
 function PrivateRoutes() {
     const token = useAuth()
     console.log('private routes', token)
-    return token ? <MainLayout /> : <Navigate to='/login' />
+    return token ? <MainLayout /> : <MainLayout />
 }
 
 
