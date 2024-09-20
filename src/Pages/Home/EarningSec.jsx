@@ -79,7 +79,7 @@ const EarningSec = () => {
         </div>
 
         <div>
-          <Product/>
+          {/* <Product/> */}
         </div>
 
 

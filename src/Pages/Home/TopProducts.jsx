@@ -109,7 +109,7 @@ const TopProducts = () => {
         className="mySwiper "
       >
         <SwiperSlide>
-          <Product />
+          {/* <Product /> */}
         </SwiperSlide>
         <SwiperSlide>
           <img src="https://swiperjs.com/demos/images/nature-2.jpg" />

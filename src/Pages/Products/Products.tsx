@@ -34,10 +34,13 @@ const Products = () => {
       isActive: item.isActive
     }));
     rows = [...filteredData]
+  }else{
+    rows=[];
   }
 
   useEffect(() => {
     fetchData()
+    console.log('data',data)
   }, [])
 
   return (

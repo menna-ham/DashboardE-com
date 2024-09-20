@@ -8,7 +8,7 @@ import {CustomNoRowsOverlay} from './CustomNoRowsOverlay'
 
 
 const DataTable = ({ columns, rows }) => {
-
+  console.log(rows)
 
   return (
     <>

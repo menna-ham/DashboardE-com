@@ -1,11 +1,17 @@
-import React from 'react'
+import React from "react";
 
 const CreateProduct = () => {
   return (
-    <div>
-      CreateProduct
-    </div>
-  )
-}
+    <div className="p-2">
+      <h1> Create New Product</h1>
 
-export default CreateProduct
+      <div className='flex flex-row flex-wrap gap-3 items-center  bg-pink-300 p-2 '>
+        <div>stepper</div>
+
+        <div>content</div>
+      </div>
+    </div>
+  );
+};
+
+export default CreateProduct;
