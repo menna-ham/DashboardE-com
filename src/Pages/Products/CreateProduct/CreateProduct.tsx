@@ -5,8 +5,8 @@ import StepperTest from './StepperTest.tsx';
 
 const CreateProduct = () => {
   return (
-    <div>
-      CreateProduct
+    <div className='p-2'>
+      <p className='text-2xl font-semibold pb-3'>New Product</p>
       <StepperTest/>
       {/* <StepperCom/> */}
     </div>
