@@ -79,15 +79,12 @@ const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) 
   
     <div className='p-2 '>
       <Modal
-      
         isOpen={isOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel={`Create ${subtitle}`}
         ariaHideApp={false}
-        
-
       >
         <button className='float-end' onClick={closeModal}><AiOutlineClose />  </button>
 
