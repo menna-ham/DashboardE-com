@@ -153,7 +153,7 @@ const StepperTest = () => {
                   {/* Render the form content based on the current step */}
                   <FormContent currentStep={currentStep} />
 
-                  <div className="stepper-buttons bg-green-500 ">
+                  <div className="stepper-buttons bg-green-500  ">
                     <Button
                       disabled={currentStep === 0}
                       onClick={handleBack}
