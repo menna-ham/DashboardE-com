@@ -13,7 +13,7 @@ import { TbLibraryPhoto, TbCategory2, TbReportMoney } from "react-icons/tb";
 import { MdOutlineSettings } from "react-icons/md";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage, useFormikContext } from "formik";
-import DragAndDropFileInput from './DragAndDropFileInput'
+import DragAndDropFileInput from "./DragAndDropFileInput";
 
 // https://blog.logrocket.com/add-stepper-components-react-app/
 
@@ -164,35 +164,37 @@ const StepperTest = () => {
                     >
                       Back
                     </Button>
-                    {
-                      currentStep === steps.length - 1 ? <Button
+                    {currentStep === steps.length - 1 ? (
+                      <Button
                         variant="contained"
                         onClick={handleNext}
                         sx={{
                           mt: 2,
-                          backgroundColor: '#6695EB ',
-                          '&:hover': {
-                            backgroundColor: '#544EAB', // Change background color on hover
+                          backgroundColor: "#6695EB ",
+                          "&:hover": {
+                            backgroundColor: "#544EAB", // Change background color on hover
                           },
                         }}
-                      // className="bg-[#544EAB]"
+                        // className="bg-[#544EAB]"
                       >
                         Finish
-                      </Button> : <Button
+                      </Button>
+                    ) : (
+                      <Button
                         variant="contained"
                         onClick={handleNext}
                         sx={{
                           mt: 2,
-                          backgroundColor: '#F98A6D',
-                          '&:hover': {
-                            backgroundColor: '#544EAB', // Change background color on hover
+                          backgroundColor: "#F98A6D",
+                          "&:hover": {
+                            backgroundColor: "#544EAB", // Change background color on hover
                           },
                         }}
-                      // className="bg-[#F98A6D]"
+                        // className="bg-[#F98A6D]"
                       >
                         Next
                       </Button>
-                    }
+                    )}
                   </div>
                 </div>
               )}
@@ -210,7 +212,7 @@ const StepperTest = () => {
 const FormContent = ({ currentStep }) => {
   const [dragActive, setDragActive] = useState(false);
   const [preview, setPreview] = useState(null);
-  const [fileInfo, setFileInfo] = useState({ name: '', size: 0 }); // File information
+  const [fileInfo, setFileInfo] = useState({ name: "", size: 0 }); // File information
   const { setFieldValue } = useFormikContext();
 
   const handleDragOver = (e) => {
@@ -234,9 +236,9 @@ const FormContent = ({ currentStep }) => {
 
     const file = e.dataTransfer.files[0];
     if (file) {
-      setFieldValue("productImage", file);  // Update Formik field value
-      setPreview(URL.createObjectURL(file));  // Set image preview
-      setFileInfo({ name: file.name, size: (file.size / 1024).toFixed(1) });  // Set file info (KB)
+      setFieldValue("productImage", file); // Update Formik field value
+      setPreview(URL.createObjectURL(file)); // Set image preview
+      setFileInfo({ name: file.name, size: (file.size / 1024).toFixed(1) }); // Set file info (KB)
     }
   };
 
@@ -250,14 +252,15 @@ const FormContent = ({ currentStep }) => {
     }
   };
 
-
-
   switch (currentStep) {
     case 0:
       return (
         <div>
           <div className="form-group flex flex-col gap-2 mb-3">
-            <label htmlFor="productTitle" className="block mb-1 text-sm font-medium text-gray-700">
+            <label
+              htmlFor="productTitle"
+              className="block mb-1 text-sm font-medium text-gray-700"
+            >
               Product Title <span className="text-red-600">*</span>
             </label>
             <Field
@@ -275,15 +278,19 @@ const FormContent = ({ currentStep }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="description" className="block mb-1 text-sm font-medium text-gray-700">Description <span className="text-red-600">*</span></label>
+            <label
+              htmlFor="description"
+              className="block mb-1 text-sm font-medium text-gray-700"
+            >
+              Description <span className="text-red-600">*</span>
+            </label>
             <Field
               as="textarea"
               id="description"
               name="description"
               placeholder="Enter your message..."
-              rows={'8'}
+              rows={"8"}
               className="w-full p-2 border-2 border-gray-300 border-dashed rounded-lg focus:ring-0 focus:outline-none resize-none bg-transparent "
-
             />
             <ErrorMessage
               name="description"
@@ -301,14 +308,13 @@ const FormContent = ({ currentStep }) => {
 
     case 1:
       return (
-
-        <>
-          <div className="form-group">
+        <div className="flex flex-col gap-3 justify-center">
+          {/* <div className="form-group">
             <label htmlFor="productGallery" className="block mb-2 text-sm font-medium text-gray-700">
               Product Image <span className="text-red-600">*</span>
-            </label>
+            </label> */}
 
-            {/* <div
+          {/* <div
               className={`w-full border-2 ${dragActive ? 'border-blue-500' : 'border-dashed border-[#544EAB]'} rounded-lg bg-[#f7f6fb] p-6 text-center`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
@@ -342,29 +348,56 @@ const FormContent = ({ currentStep }) => {
                 </div>
               )}
             </div> */}
-            <DragAndDropFileInput
+          {/* <DragAndDropFileInput
               label="Product Image"
               name="productImage"
               placeholderImage="image-placeholder-url"
               accept=".jpg,.png,.gif,.svg"
-            />
+            /> */}
+          <DragAndDropFileInput
+            label="Upload Product Image"
+            name="productImage" // Field for product image
+            galleryFieldName="productImage" // Field for product gallery
+            accept=".jpg,.png,.gif,.svg"
+            placeholderImage="https://via.placeholder.com/150" // Placeholder image for drag-and-drop area
+            multiple={false} // Single file upload for product image
+          />
+          <ErrorMessage
+            name="productImage"
+            component="div"
+            className="text-red-600"
+          />
 
-          </div>
+          {/* </div> */}
 
-          <div className="form-group mt-4">
+          {/* <div className="form-group mt-4">
             <label htmlFor="productGallery" className="block mb-2 text-sm font-medium text-gray-700">
               Product Gallery
-            </label>
+            </label> */}
 
-            <DragAndDropFileInput
+          {/* <DragAndDropFileInput
               label="Product Gallery"
               name="productGallery"
               placeholderImage="gallery-placeholder-url"
               accept=".jpg,.png,.gif,.svg"
               multiple // Allow multiple files for gallery
-            />
+            /> */}
+          <DragAndDropFileInput
+            label="Upload Product Gallery"
+            name="productGallery" // Still use productImage to drag an image, but append to the gallery
+            galleryFieldName="productGallery" // The gallery field
+            accept=".jpg,.png,.gif,.svg"
+            placeholderImage="https://via.placeholder.com/150"
+            multiple={true} // Multiple file upload for product gallery
+          />
 
-            {/* <div className="w-full border-2 border-dashed border-[#544EAB] rounded-lg bg-[#f7f6fb] p-6 text-center">
+          <ErrorMessage
+            name="productGallery"
+            component="div"
+            className="text-red-600"
+          />
+
+          {/* <div className="w-full border-2 border-dashed border-[#544EAB] rounded-lg bg-[#f7f6fb] p-6 text-center">
               <Field
                 type="file"
                 id="productGallery"
@@ -386,17 +419,18 @@ const FormContent = ({ currentStep }) => {
                 className="text-red-600 mt-2 text-sm"
               />
             </div> */}
-          </div>
-
-        </>
-
+          {/* </div> */}
+        </div>
       );
 
     case 2:
       return (
         <>
           <div className="form-group">
-            <label htmlFor="productCategory" className="block mb-1 text-sm font-medium text-gray-700">
+            <label
+              htmlFor="productCategory"
+              className="block mb-1 text-sm font-medium text-gray-700"
+            >
               Product Category <span className="text-red-600">*</span>
             </label>
             <Field
@@ -413,7 +447,12 @@ const FormContent = ({ currentStep }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="productSubCategory" className="block mb-1 text-sm font-medium text-gray-700">Product SubSubCategory <span className="text-red-600">*</span></label>
+            <label
+              htmlFor="productSubCategory"
+              className="block mb-1 text-sm font-medium text-gray-700"
+            >
+              Product SubSubCategory <span className="text-red-600">*</span>
+            </label>
             <Field
               type="text"
               id="productSubCategory"
@@ -428,7 +467,12 @@ const FormContent = ({ currentStep }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="ProductBrand" className="block mb-1 text-sm font-medium text-gray-700">Product Brand <span className="text-red-600">*</span></label>
+            <label
+              htmlFor="ProductBrand"
+              className="block mb-1 text-sm font-medium text-gray-700"
+            >
+              Product Brand <span className="text-red-600">*</span>
+            </label>
             <Field
               type="text"
               id="ProductBrand"
@@ -448,7 +492,12 @@ const FormContent = ({ currentStep }) => {
       return (
         <>
           <div className="form-group">
-            <label htmlFor="sellingPrice" className="block mb-1 text-sm font-medium text-gray-700">Selling Price <span className="text-red-600">*</span></label>
+            <label
+              htmlFor="sellingPrice"
+              className="block mb-1 text-sm font-medium text-gray-700"
+            >
+              Selling Price <span className="text-red-600">*</span>
+            </label>
             <Field
               type="number"
               id="sellingPrice"
@@ -463,7 +512,12 @@ const FormContent = ({ currentStep }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="sellingPrice" className="block mb-1 text-sm font-medium text-gray-700">Discount <span className="text-red-600">*</span></label>
+            <label
+              htmlFor="sellingPrice"
+              className="block mb-1 text-sm font-medium text-gray-700"
+            >
+              Discount <span className="text-red-600">*</span>
+            </label>
             <Field
               type="number"
               id="Discount"
@@ -478,7 +532,12 @@ const FormContent = ({ currentStep }) => {
     case 4:
       return (
         <div className="form-group">
-          <label htmlFor="advanceDetails" className="block mb-1 text-sm font-medium text-gray-700">Advance <span className="text-red-600">*</span></label>
+          <label
+            htmlFor="advanceDetails"
+            className="block mb-1 text-sm font-medium text-gray-700"
+          >
+            Advance <span className="text-red-600">*</span>
+          </label>
           <Field
             type="text"
             id="advanceDetails"

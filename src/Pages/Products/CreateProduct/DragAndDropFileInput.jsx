@@ -2,16 +2,24 @@ import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import useDragAndDrop from '../../../utils/useDragAndDrop'; // Import the custom hook
 
-const DragAndDropFileInput = ({ label, name, accept = '.jpg,.png,.gif,.svg', placeholderImage, multiple = false }) => {
-  const { 
-    dragActive, 
-    preview, 
-    fileInfo, 
-    handleDragOver, 
-    handleDragLeave, 
-    handleDrop, 
-    handleChange 
-  } = useDragAndDrop(name); // Use the hook with the Formik field name
+const DragAndDropFileInput = ({
+  label,
+  name, // This is the productImage field name
+  galleryFieldName, // This is the productGallery field name
+  accept = '.jpg,.png,.gif,.svg',
+  placeholderImage,
+  multiple = false // Specify if multiple files should be handled
+}) => {
+  // Use the hook with both productImage and productGallery fields
+  const {
+    dragActive,
+    preview,
+    fileInfo,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleChange,
+  } = useDragAndDrop(name, galleryFieldName, multiple); // Pass both field names and the multiple flag
 
   return (
     <div className="form-group">
@@ -32,6 +40,7 @@ const DragAndDropFileInput = ({ label, name, accept = '.jpg,.png,.gif,.svg', pla
           accept={accept}
           className="hidden"
           onChange={handleChange}
+          value={undefined} // Ensure no controlled value is passed
           multiple={multiple} // Set the multiple attribute if required
         />
 
@@ -43,11 +52,22 @@ const DragAndDropFileInput = ({ label, name, accept = '.jpg,.png,.gif,.svg', pla
           </label>
         ) : (
           <div className="flex items-center justify-center">
-            <img src={preview} alt="Preview" className="w-24 h-24 object-cover rounded-md" />
-            <div className="ml-3">
-              <p className="text-sm font-semibold">{fileInfo.size} KB</p>
-              <p className="text-gray-500 text-sm truncate">{fileInfo.name}</p>
-            </div>
+            {Array.isArray(preview) ? (
+              // If there are multiple previews (for gallery)
+              preview.map((src, index) => (
+                <img key={index} src={src} alt={`Preview ${index}`} className="w-24 h-24 object-cover rounded-md mx-2" />
+              ))
+            ) : (
+              // If there is a single preview (for product image)
+              <img src={preview} alt="Preview" className="w-24 h-24 object-cover rounded-md" />
+            )}
+
+            {fileInfo && (
+              <div className="ml-3">
+                <p className="text-sm font-semibold">{fileInfo.size} KB</p>
+                <p className="text-gray-500 text-sm truncate">{fileInfo.name}</p>
+              </div>
+            )}
           </div>
         )}
       </div>

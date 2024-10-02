@@ -44,62 +44,72 @@ function App() {
   },[])
 
 
-  // const router = createBrowserRouter([
-  //   {
-  //     path: "/",
-  //     element: <MainLayout  LogOut={LogOut}/>,
-  //     children: [
-  //       {
-  //         path: "/",
-  //         element: <Home/>,
-  //       },
-  //       {
-  //         path: "/users",
-  //         element: <Users />,
-  //       },
-  //       {
-  //         path: "/brands",
-  //         element: <Brands />,
-  //       },
-  //       {
-  //         path: "/categories",
-  //         element: <Categories />,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     path:'/login',
-  //     element:<Login getUserToken={getUserToken}/>
-  //   },
-    
-  //   {
-  //     path:'/signUp',
-  //     element:<SignUp/>
-  //   },
-   
-  // ]);
+  const router = createBrowserRouter([
+    {
+      path: "/", // Root path
+      element: <MainLayout LogOut={LogOut} />, // Main layout with LogOut prop
+      children: [
+        {
+          path: "/", // Home page
+          element: <Home />,
+        },
+        {
+          path: "users", // "/users" path (no leading slash needed in children)
+          element: <Users />,
+        },
+        {
+          path: "brands", // "/brands" path
+          element: <Brands />,
+        },
+        {
+          path: "categories", // "/categories" path
+          element: <Categories />,
+        },
+        {
+          path: "products", // "/products" path
+          element: <Products />,
+          children: [
+            {
+              path: "CreateProduct", // "/products/CreateProduct"
+              element: <CreateProduct />,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      path: "/login", // Login page
+      element: <Login getUserToken={getUserToken} />,
+    },
+    {
+      path: "/signUp", // SignUp page
+      element: <SignUp />,
+    },
+  ])
+  
+  
   return (
-    <Routes>
-      <Route element={<PrivateRoutes />}>
-        <Route element={<Home />} path='/' />
-        <Route element={<Brands />} path='/brands' />
-        <Route element={<Products />} path='/products' />
-        <Route element={<CreateProduct />} path='/products/createProduct' />
-        <Route element={<Categories />} path='/categories' />
-        <Route element={<Users />} path='/users' />
-        {/* <Route element={<ErrorComp />} path='*' /> */}
-      </Route>
-      <Route element={<Login />} path='/login' />
+    // <Routes>
+    //   <Route element={<PrivateRoutes />}>
+    //     <Route element={<Home />} path='/' />
+    //     <Route element={<Brands />} path='/brands' />
+    //     <Route element={<Products />} path='/products' />
+    //     <Route element={<CreateProduct />} path='/products/createProduct' />
+    //     <Route element={<Categories />} path='/categories' />
+    //     <Route element={<Users />} path='/users' />
+    //     {/* <Route element={<ErrorComp />} path='*' /> */}
+    //   </Route>
+    //   <Route element={<Login />} path='/login' />
 
-      <Route element={<PublicRoutes />}>
-        <Route element={<Login />} path='/login' />
-        <Route element={<Login />} path='/register' />
-        <Route element={<Home />} path='/' />
-      </Route>
+    //   <Route element={<PublicRoutes />}>
+    //     <Route element={<Login />} path='/login' />
+    //     <Route element={<Login />} path='/register' />
+    //     <Route element={<Home />} path='/' />
+    //   </Route>
 
-    </Routes>
+    // </Routes>
 
-    // <RouterProvider router={router}/>
+    <RouterProvider router={router}/>
   
   );
 }
