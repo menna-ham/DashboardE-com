@@ -33,7 +33,7 @@ const useFetch = (method,endpoint) => {
                             // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                         }
                     });
-                    // console.log(response)
+                    console.log(response)
                     setData(response.data);
                     
                     break;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Stepper,
   Step,
@@ -14,6 +14,7 @@ import { MdOutlineSettings } from "react-icons/md";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage, useFormikContext } from "formik";
 import DragAndDropFileInput from "./DragAndDropFileInput";
+import useFetch from "../../../utils/useFetch.tsx";
 
 // https://blog.logrocket.com/add-stepper-components-react-app/
 
@@ -41,6 +42,8 @@ const validationSchema = Yup.object({
 });
 
 const StepperTest = () => {
+  const {data, loading, error, fetchData } = useFetch('get','Category/GetAllCategory')
+  const {data:subData, loading:subLoad, error:SubErr, fetchData:fetSubCat } = useFetch('get','SubCategory/GetAllSubCategory')
   const [currentStep, setCurrentStep] = useState(0);
 
   const handleNext = () => {
@@ -122,6 +125,11 @@ const StepperTest = () => {
     console.log("Form submitted:", values);
     // Do something with the form data here, such as an API call
   };
+
+  useEffect(() => {
+    fetchData()
+    fetSubCat()
+  }, [])
 
   return (
     <div className="w-full py-3 flex flex-row  gap-3  border-t-2 border-b-2 border-gray-300 border-dashed">
@@ -268,7 +276,7 @@ const FormContent = ({ currentStep }) => {
               id="productTitle"
               name="productTitle"
               placeholder="Enter product name"
-              className="w-full border-2 border-gray-300 border-dashed rounded-lg p-2"
+              className="w-full p-2 border-2 border-gray-300 border-dashed rounded-lg focus:ring-0 focus:outline-none resize-none bg-transparent"
             />
             <ErrorMessage
               name="productTitle"
@@ -434,11 +442,15 @@ const FormContent = ({ currentStep }) => {
               Product Category <span className="text-red-600">*</span>
             </label>
             <Field
-              type="text"
+              as={'select'}
               id="productCategory"
               name="productCategory"
               placeholder="Enter product category"
-            />
+              className={`w-full p-2 border-2 border-gray-300 border-dashed rounded-lg focus:ring-0 focus:outline-none resize-none bg-transparent`}
+            >
+              <option selected>..</option>
+              <option><button className="text-[#544EAB]" onClick={()=>console.log('open category form')}>Create New Category</button></option>
+            </Field>
             <ErrorMessage
               name="productCategory"
               component="div"
