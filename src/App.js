@@ -44,48 +44,94 @@ function App() {
   },[])
 
 
+  // const router = createBrowserRouter([
+  //   {
+  //     path: "/", // Root path
+  //     element: <MainLayout LogOut={LogOut} />, // Main layout with LogOut prop
+  //     children: [
+  //       {
+  //         path: "/", // Home page
+  //         element: <Home />,
+  //       },
+  //       {
+  //         path: "users", // "/users" path (no leading slash needed in children)
+  //         element: <Users />,
+  //       },
+  //       {
+  //         path: "brands", // "/brands" path
+  //         element: <Brands />,
+  //       },
+  //       {
+  //         path: "categories", // "/categories" path
+  //         element: <Categories />,
+  //       },
+  //       {
+  //         path: "products", // "/products" path
+  //         element: <Products />,
+  //         children: [
+  //           {
+  //             path: "CreateProduct", // "/products/CreateProduct"
+  //             element: <CreateProduct />,
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     path: "/login", // Login page
+  //     element: <Login getUserToken={getUserToken} />,
+  //   },
+  //   {
+  //     path: "/signUp", // SignUp page
+  //     element: <SignUp />,
+  //   },
+  // ])
   const router = createBrowserRouter([
     {
-      path: "/", // Root path
-      element: <MainLayout LogOut={LogOut} />, // Main layout with LogOut prop
+      path: "/", 
+      element: <MainLayout LogOut={LogOut} />, // MainLayout wraps protected routes
       children: [
         {
           path: "/", // Home page
           element: <Home />,
         },
         {
-          path: "users", // "/users" path (no leading slash needed in children)
-          element: <Users />,
+          path: "users", // Protected route
+          element: <PrivateRoutes element={<Users />} />,
         },
         {
-          path: "brands", // "/brands" path
-          element: <Brands />,
+          path: "brands", // Protected route
+          element: <PrivateRoutes element={<Brands />} />,
         },
         {
-          path: "categories", // "/categories" path
-          element: <Categories />,
+          path: "categories", // Protected route
+          element: <PrivateRoutes element={<Categories />} />,
         },
         {
-          path: "products", // "/products" path
-          element: <Products />,
-          children: [
-            {
-              path: "CreateProduct", // "/products/CreateProduct"
-              element: <CreateProduct />,
-            },
-          ],
+          path: "products", // Protected route with nested children
+          element: <PrivateRoutes element={<Products />} />,
+          // children: [
+          //   {
+          //     path: "CreateProduct",
+          //     element: <PrivateRoutes element={<CreateProduct />} />,
+          //   },
+          // ],
+        },
+        {
+          path: "products/CreateProduct", // Protected route
+          element: <PrivateRoutes element={<CreateProduct />} />,
         },
       ],
     },
     {
-      path: "/login", // Login page
+      path: "/login", // Public login page
       element: <Login getUserToken={getUserToken} />,
     },
     {
-      path: "/signUp", // SignUp page
+      path: "/signUp", // Public sign-up page
       element: <SignUp />,
     },
-  ])
+  ]);
   
   
   return (
