@@ -26,6 +26,7 @@ const Brands = () => {
   let [DeleteModalIsOpen, setDeleteIsOpen] = useState(false);
   let [activeLoading, setActiveLoading] = useState({});
   let [delID, setdelID] = useState({ID:''});
+  let photoPath='http://ecomerce.runasp.net/'
 
   let handleEdit = (row) => {
     console.log('edit', row.ID);
@@ -101,7 +102,8 @@ const Brands = () => {
     {
       field: 'photoPath', headerName: 'Logo', width: 150,align:'center',
       renderCell: (params) => (
-        <Avatar alt="Remy Sharp" src={noBrand}  /> 
+        // console.log(params.row.photoPath)
+        <Avatar alt="Remy Sharp" src={photoPath+params.row.photoPath}  /> 
       )
     },
     { field: 'nameAR', headerName: 'Name Arabic', width: 150, type: 'string' },

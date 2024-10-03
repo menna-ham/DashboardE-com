@@ -65,7 +65,8 @@ const Products = () => {
             <input type="search" placeholder='Search for' className='h-10 w-96 pr-8 pl-5 rounded z-0 focus:none focus:outline-none' />
           </div>
 
-          <div> <Link to={'/products/createProduct'} className='bg-blue-400 text-white p-2 rounded-lg'>Add New Product</Link></div>
+          {/* <div> <Link to='/products/CreateProduct' className='bg-blue-400 text-white p-2 rounded-lg'>Add New Product</Link></div> */}
+          <div><Link to='CreateProduct' onClick={()=>console.log('create')}>creat </Link> </div>
 
         </div>
       </div>
