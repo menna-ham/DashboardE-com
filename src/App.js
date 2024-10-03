@@ -18,7 +18,7 @@ import {PublicRoutes} from './utils/PrivateRoutes.jsx'
 import Products from './Pages/Products/Products.tsx';
 import CreateProduct from './Pages/Products/CreateProduct/CreateProduct.tsx';
 
-
+// https://admin.pixelstrap.net/mofi/template/add-products.html
 function App() {
   let [userData,setUserData]= useState({})
 
