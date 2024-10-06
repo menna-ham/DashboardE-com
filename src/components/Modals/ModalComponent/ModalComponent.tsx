@@ -28,7 +28,7 @@ const customStyles = {
 const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) => {
   let { data, loading, error, fetchData } = useFetch('post', path)
   let [Success, setSuccess] = useState(false);
-
+  console.log('modal called')
   const validationSchema = Yup.object().shape(
     inputs.reduce((schema, input) => {
       schema[input.name] = input.validation;
@@ -47,6 +47,7 @@ const ModalComponent = ({inputs,subtitle,isOpen,setIsOpen,initialValues, path}) 
     }
 
     const handleSubmit = async(values) => {
+      console.log('submitting', values)
       let formData:any = new FormData()
       formData.append('nameAR', values.nameAR);
       formData.append('nameEN', values.nameEN);
