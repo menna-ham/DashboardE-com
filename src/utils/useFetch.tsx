@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react'
 //     body: {},
 // }
 
+//http://ecomerce.runasp.net/swagger/index.html
+
 const useFetch = (method,endpoint) => {
 
     const [data, setData] = useState(null)
