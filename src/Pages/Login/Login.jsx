@@ -52,7 +52,7 @@ const Login = ({ getUserToken }) => {
     try {
       setIsLoading(true);
       let {userName,password,rememberMe} = {...values}
-      const { data } = await axios.post('http://ecomerce.runasp.net/api/User/Login',
+      const { data } = await axios.post('https://ecomerce.runasp.net/api/User/Login',
         { ...values },{headers:{
           'Accept':'text/plain',
           "Content-Type":'application/json-patch+json',

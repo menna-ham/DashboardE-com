@@ -25,8 +25,6 @@ const steps = [
   { label: "Add Product Details", icon: CgShoppingCart },
   { label: "Product Gallery", icon: TbLibraryPhoto },
   { label: "Product Categories", icon: TbCategory2 },
-  { label: "Selling Prices", icon: TbReportMoney },
-  { label: "Advance", icon: MdOutlineSettings },
 ];
 
 // Validation schema for form fields
@@ -41,7 +39,9 @@ const validationSchema = Yup.object({
   sellingPrice: Yup.number()
     .typeError("Price must be a number")
     .required("Selling price is required"),
-  advanceDetails: Yup.string().required("Advance details are required"),
+  discount: Yup.number()
+   .typeError("Discount must be a number")
+   
 });
 
 const StepperTest = () => {
@@ -111,22 +111,20 @@ const StepperTest = () => {
     );
   };
 
-  // Initial form values for all steps
   const initialValues = {
     productTitle: "",
+    sellingPrice: "",
+    discount:'',
     description: "",
     productImage: "",
     productGallery: [],
     productCategory: "",
     productSubCategory: "",
     productBrand: "",
-    sellingPrice: "",
-    advanceDetails: "",
   };
 
   const onSubmit = (values) => {
     console.log("Form submitted:", values);
-    // Do something with the form data here, such as an API call
   };
 
   useEffect(() => {
@@ -136,20 +134,17 @@ const StepperTest = () => {
 
   return (
     <div className="w-full py-3 flex flex-row  gap-3  border-t-2 border-b-2 border-gray-300 border-dashed">
-      {/* Stepper Section */}
-      <div className="stepper  py-2 px-5 self-start border-e-2 border-dashed border-gray-300">
+      <div className="stepper  py-2 px-5 self-start ">
         <Stepper activeStep={currentStep} orientation="vertical">
           {steps.map((step, index) => (
             <Step key={step.label}>
               {renderStepLabel(step, index)}
-              {/* <StepLabel className='cursor-pointer transition-all duration-100 hover:text-green-400' icon={renderStepIcon(step.icon, index)}>{step.label}</StepLabel> */}
             </Step>
           ))}
         </Stepper>
       </div>
 
-      {/* Formik form */}
-      <div className="form-content py-2 px-3 w-full">
+      <div className="form-content py-2 px-3 w-full border-s-2 border-dashed border-gray-300">
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -164,14 +159,14 @@ const StepperTest = () => {
                 </div>
               ) : (
                 <div>
-                  {/* Render the form content based on the current step */}
                   <FormContent currentStep={currentStep} />
 
-                  <div className="stepper-buttons bg-green-500 ">
+                  <div className="stepper-buttons flex flex-row justify-end pt-2">
                     <Button
                       disabled={currentStep === 0}
                       onClick={handleBack}
                       sx={{ mt: 2, mr: 1 }}
+                      className='text-[#544EAB]'
                     >
                       Back
                     </Button>
@@ -183,10 +178,9 @@ const StepperTest = () => {
                           mt: 2,
                           backgroundColor: "#6695EB ",
                           "&:hover": {
-                            backgroundColor: "#544EAB", // Change background color on hover
+                            backgroundColor: "#544EAB", 
                           },
                         }}
-                        // className="bg-[#544EAB]"
                       >
                         Finish
                       </Button>
@@ -198,7 +192,7 @@ const StepperTest = () => {
                           mt: 2,
                           backgroundColor: "#F98A6D",
                           "&:hover": {
-                            backgroundColor: "#544EAB", // Change background color on hover
+                            backgroundColor: "#544EAB", 
                           },
                         }}
                       >
