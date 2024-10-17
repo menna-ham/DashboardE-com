@@ -46,3 +46,8 @@ input {
     transform: rotate(360deg);
   }
 }
+
+.dark{
+  background-color: black;
+  color: white;
+}

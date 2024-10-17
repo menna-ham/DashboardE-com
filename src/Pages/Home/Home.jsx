@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ChartsSec from './ChartsSec';
 import PieChart from '../../components/ECharts/PieChart';
 import DynamicChart from '../../components/ECharts/DynamicChart';
@@ -10,12 +10,21 @@ import EarningSec from './EarningSec';
 
 
 const Home = () => {
+  let [theme,setTheme] = useState('light')
+  let handleTheme = ()=>{
+    if(theme=='light')
+    {
+      setTheme('dark')
+    }else{
+      setTheme('light')
+    }
+  }
 
 
   return (
     <div >
-
-      <div className='flex flex-row gap-3 md:flex-row sm:flex-col h-[100%]'>
+      <button onClick={handleTheme}>theme</button>
+      <div className={`flex flex-row gap-3 md:flex-row sm:flex-col h-[100%] ${theme}`}>
 
         <div className="md:w-[70%] flex flex-col gap-4">
 
