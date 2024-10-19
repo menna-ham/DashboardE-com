@@ -10,12 +10,13 @@ import EarningSec from './EarningSec';
 
 
 const Home = () => {
-  let [theme,setTheme] = useState('light')
-  let handleTheme = ()=>{
-    if(theme=='light')
-    {
+  let [theme, setTheme] = useState('light')
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  let handleTheme = () => {
+    if (theme == 'light') {
       setTheme('dark')
-    }else{
+    } else {
       setTheme('light')
     }
   }
@@ -29,12 +30,13 @@ const Home = () => {
         <div className="md:w-[70%] flex flex-col gap-4">
 
           <div className='charts '>
-            <ChartsSec/>
+
+            <ChartsSec />
           </div>
 
           <div className='dynamic bg-white p-2  rounded-2xl shadow-md'>
             {/* <p>Dynamic Data Chart </p> */}
-            <DynamicChart/>
+            <DynamicChart />
 
           </div>
 
@@ -43,25 +45,25 @@ const Home = () => {
             <div className="pie bg-white p-2  rounded-2xl shadow-md md:w-1/3 ">
               <p className='font-semibold'>Statistice</p>
               <div className=' pb-2 m-auto'>
-              <PieChart />
+                <PieChart />
 
               </div>
             </div>
 
             <div className='bg-white rounded-2xl shadow-md md:w-2/3'>
-              <HorizontalBarChart/>
+              <HorizontalBarChart />
             </div>
           </div>
 
           <div className='bg-white p-2 rounded-2xl shadow-md'>
             <p className='text-xl font-semibold'>Recent 10 Orders</p>
             <div>
-              <RecentOrders/>
+              <RecentOrders />
             </div>
           </div>
 
           <div className='bg-white p-2 rounded-2xl shadow-md'>
-            <GradientYAxisChart/>
+            <GradientYAxisChart />
           </div>
 
 
@@ -70,8 +72,8 @@ const Home = () => {
 
 
         <div className="earnings md:w-[30%] ">
-          <EarningSec/>
-          
+          <EarningSec />
+
         </div>
 
       </div>

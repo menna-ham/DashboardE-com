@@ -17,7 +17,7 @@ import DragAndDropFileInput from "./DragAndDropFileInput";
 import useFetch from "../../../utils/useFetch.tsx";
 import CreateOptionCom from "./CreateOptionCom.tsx";
 import { CgAddR } from "react-icons/cg";
-import FormContent from "./FormContent.tsx";
+import FormCreateProduct from "./FormCreateProduct.tsx";
 
 // https://blog.logrocket.com/add-stepper-components-react-app/
 
@@ -43,11 +43,28 @@ const validationSchema = Yup.object({
    .typeError("Discount must be a number")
    
 });
+const initialValues = {
+  productTitle: "",
+  description: "",
+  productImage: "",
+  productGallery: [],
+  productCategory: "",
+  productSubCategory: "",
+  productBrand: "",
+  sellingPrice: "",
+  discount: "",
+};
 
-const StepperTest = () => {
-  const {data, loading, error, fetchData } = useFetch('get','Category/GetAllCategory')
-  const {data:subData, loading:subLoad, error:SubErr, fetchData:fetSubCat } = useFetch('get','SubCategory/GetAllSubCategory')
-  const [currentStep, setCurrentStep] = useState(0);
+const StepperTest = ({
+  steps,
+  initialValues,
+  validationSchema,
+  onSubmit,
+  // fetchDataHooks, // Array of hooks that return fetch functions
+  FormCreateProduct,
+}) => {
+  // const StepperTest = ()=>{  
+const [currentStep, setCurrentStep] = useState(0);
 
   const handleNext = () => {
     setCurrentStep((prevStep) => prevStep + 1);
@@ -111,27 +128,115 @@ const StepperTest = () => {
     );
   };
 
-  const initialValues = {
-    productTitle: "",
-    sellingPrice: "",
-    discount:'',
-    description: "",
-    productImage: "",
-    productGallery: [],
-    productCategory: "",
-    productSubCategory: "",
-    productBrand: "",
-  };
 
-  const onSubmit = (values) => {
-    console.log("Form submitted:", values);
-  };
+  // const onSubmit = (values) => {
+  //   console.log("Form submitted:", values);
+  // };
 
-  useEffect(() => {
-    fetchData()
-    fetSubCat()
-  }, [])
+  // useEffect(() => {
+  //   // Trigger all fetch data functions from hooks provided in the fetchDataHooks array
+  //   console.log('fetch from stepper')
+  //   fetchDataHooks.forEach((hook) => hook.fetchData());
+  // }, [fetchDataHooks]);
 
+  // useEffect(() => {
+  //   fetchData()
+  //   fetSubCat()
+  // }, [])
+
+  //not working
+  // return (
+  //   <div className="w-full py-3 flex flex-row gap-3 border-t-2 border-b-2 border-gray-300 border-dashed">
+  //     <div className="stepper py-2 px-5 self-start">
+  //       <Stepper activeStep={currentStep} orientation="vertical">
+  //         {steps.map((step, index) => (
+  //           <Step key={step.label}>
+  //             <StepLabel
+  //               icon={renderStepIcon(step.icon, index)}
+  //               sx={{
+  //                 cursor: "pointer",
+  //                 transition: "color 0.3s ease",
+  //                 "&:hover": {
+  //                   color: "red",
+  //                 },
+  //               }}
+  //             >
+  //               {step.label}
+  //             </StepLabel>
+  //           </Step>
+  //         ))}
+  //       </Stepper>
+  //     </div>
+
+  //     <div className="form-content py-2 px-3 w-full border-s-2 border-dashed border-gray-300">
+  //       <Formik
+  //         initialValues={initialValues}
+  //         validationSchema={validationSchema}
+  //         onSubmit={onSubmit}
+  //       >
+  //         {({ values }) => (
+  //           <Form>
+  //             {currentStep === steps.length ? (
+  //               <div>
+  //                 <Typography variant="h6">All steps completed</Typography>
+  //                 <Button onClick={handleReset}>Reset</Button>
+  //               </div>
+  //             ) : (
+  //               <div>
+  //                 {FormCreateProduct(currentStep, values)}
+
+  //                 <div className="stepper-buttons flex flex-row justify-end pt-2">
+  //                   <Button
+  //                     disabled={currentStep === 0}
+  //                     onClick={handleBack}
+  //                     sx={{ mt: 2, mr: 1 }}
+  //                     className="text-[#544EAB]"
+  //                   >
+  //                     Back
+  //                   </Button>
+  //                   {currentStep === steps.length - 1 ? (
+  //                     <Button
+  //                       variant="contained"
+  //                       onClick={handleNext}
+  //                       type={'submit'}
+  //                       sx={{
+  //                         mt: 2,
+  //                         backgroundColor: "#6695EB",
+  //                         "&:hover": {
+  //                           backgroundColor: "#544EAB",
+  //                         },
+  //                       }}
+  //                     >
+  //                       Finish
+  //                     </Button>
+  //                   ) : (
+  //                     <Button
+  //                       variant="contained"
+  //                       onClick={handleNext}
+  //                       sx={{
+  //                         mt: 2,
+  //                         backgroundColor: "#F98A6D",
+  //                         "&:hover": {
+  //                           backgroundColor: "#544EAB",
+  //                         },
+  //                       }}
+  //                     >
+  //                       Next
+  //                     </Button>
+  //                   )}
+  //                 </div>
+  //               </div>
+  //             )}
+  //             <pre>{JSON.stringify(values, null, 2)}</pre>
+  //           </Form>
+  //         )}
+  //       </Formik>
+  //     </div>
+  //   </div>
+  // );
+
+
+  //working one 
   return (
     <div className="w-full py-3 flex flex-row  gap-3  border-t-2 border-b-2 border-gray-300 border-dashed">
       <div className="stepper  py-2 px-5 self-start ">
@@ -159,12 +264,13 @@ const StepperTest = () => {
                 </div>
               ) : (
                 <div>
-                  <FormContent currentStep={currentStep} />
+                  {FormCreateProduct(currentStep, values)}
+                  {/* <FormCreateProduct currentStep={currentStep} values={initialValues}/> */}
 
                   <div className="stepper-buttons flex flex-row justify-end pt-2">
                     <Button
                       disabled={currentStep === 0}
-                      onClick={handleBack}
+                      onClick={handleBack} 
                       sx={{ mt: 2, mr: 1 }}
                       className='text-[#544EAB]'
                     >

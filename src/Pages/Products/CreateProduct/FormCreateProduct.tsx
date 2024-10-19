@@ -1,20 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage, useFormikContext } from "formik";
-import DragAndDropFileInput from "./DragAndDropFileInput";
+import DragAndDropFileInput from "./DragAndDropFileInput.jsx";
 import useFetch from "../../../utils/useFetch.tsx";
 import CreateOptionCom from "./CreateOptionCom.tsx";
 import { CgAddR } from "react-icons/cg";
 import ModalComponent from '../../../components/Modals/ModalComponent/ModalComponent.tsx';
 import { BrandInput, BrandsinitialValues, CategoryInitialValues, CategoryInput, SubCategoryInitialValues, SubCategoryInput } from '../../../utils/inputsFeilds.js';
 
-const FormContent = ({ currentStep }) => {
-  const { data: catData, loading, error, fetchData } = useFetch('get', 'Category/GetAllCategory')
-  const { data: subData, loading: subLoad, error: SubErr, fetchData: fetSubCat } = useFetch('get', 'SubCategory/GetAllSubCategory')
-  const { data: BrandData, loading: BrandLoad, error: BrandErr, fetchData: fetBrand } = useFetch('get', 'Brand/GetAllBrand')
-  const { setFieldValue } = useFormikContext();
-  let [categories, setCategories] = useState([]);
-  let [subCategories, setSubCategories] = useState([]);
-  let [Brands, setBrands] = useState([]);
+// type CategoryItem = {
+//   nameAR: string;
+//   nameEN: string;
+//   photoPath: string;
+//   id: string;
+//   createBy: string;
+//   modifyBy: string | null;
+//   deletedBy: string | null;
+//   createAt: string;
+//   modifyAt: string | null;
+//   deletedAt: string | null;
+//   isActive: boolean;
+//   isDeleted: boolean;
+// };
+
+// type Result = {
+//   items: CategoryItem[];
+//   total: number;
+// };
+
+// type ApiResponse = {
+//   result: Result;
+//   isSuccess: boolean;
+//   message: string;
+// };
+
+const FormCreateProduct = ({ currentStep,values, subCategories, Brands, categories }) => {
+// const FormCreateProduct = ({ currentStep,values}) => {
+  // const { data: catData, loading, error, fetchData } = useFetch('get', 'Category/GetAllCategory')
+  // const { data: subData, loading: subLoad, error: SubErr, fetchData: fetSubCat } = useFetch('get', 'SubCategory/GetAllSubCategory')
+  // const { data: BrandData, loading: BrandLoad, error: BrandErr, fetchData: fetBrand } = useFetch('get', 'Brand/GetAllBrand')
+  // let [categories, setCategories] = useState([]);
+  // let [subCategories, setSubCategories] = useState([]);
+  // let [Brands, setBrands] = useState([]);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const [subCategoryModalOpen, setSubCategoryModalOpen] = useState(false);
   const [brandModalOpen, setBrandModalOpen] = useState(false);
@@ -28,47 +54,45 @@ const FormContent = ({ currentStep }) => {
   const openBrandModal = () => setBrandModalOpen(true);
   const closeBrandModal = () => setBrandModalOpen(false);
 
+  // console.log('cat', categories);
+  // console.log('brands', Brands);
+  // console.log('sub', subCategories);
+  // console.log('values',values)
+  
+  // let settingVals = () => {
+  //   console.log('cat', categories);
+  //   if (catData?.result) {
+  //     setCategories(catData.result.items);
+  //     // console.log('cat', categories);
+  //   }
+  //   if (subData?.result) {
+  //     setSubCategories(subData.result.items);
+  //     // console.log('Subcat', subCategories);
+  //   }
+  //   if (BrandData?.result) {
+  //     setBrands(BrandData.result.items);
+  //     // console.log('brands', Brands);
+  //   }
+  // };
+
+  // console.log(catData)
 
 
+  // useEffect(() => {
+  //   fetchData()
+  //   fetSubCat()
+  //   fetBrand()
+  //   settingVals()
+  //   console.log('cat', categories);
+  // }, [])
 
-  let handleSelectChange = (e: any) => {
-    console.log('heelo', e)
-    setFieldValue('productCategory', e)
-    if (e == 'addNew') {
-      setIsOpen(true);
-    }
-  }
-
-  let settingVals = () => {
-    console.log('cat', categories);
-    if (catData?.results) {
-      setCategories(catData.results.items);
-      console.log('cat', categories);
-    }
-    if (subData?.results) {
-      setSubCategories(subData.results.items);
-    }
-    if (BrandData?.results) {
-      setBrands(BrandData.results.items);
-    }
-  };
-
-
-  useEffect(() => {
-    fetchData()
-    fetSubCat()
-    fetBrand()
-    settingVals()
-    console.log('cat', categories);
-  }, [])
-
-  useEffect(() => {
-    fetchData()
-    fetSubCat()
-    fetBrand()
-    settingVals()
-    console.log('cat', categories);
-  }, [categoryModalOpen, subCategoryModalOpen, brandModalOpen])
+  // useEffect(() => {
+  //   fetchData()
+  //   fetSubCat()
+  //   fetBrand()
+  //   settingVals()
+  //   // console.log('cat', categories);
+  // }, [categoryModalOpen, subCategoryModalOpen, brandModalOpen])
 
 
   switch (currentStep) {
@@ -222,15 +246,17 @@ const FormContent = ({ currentStep }) => {
               <div className='flex flex-row items-center gap-3 justify-between w-full'>
 
                 <Field
-                  onChange={(e) => handleSelectChange(e.target.value)}
+                  // onChange={(e) => console.log(e.target.value)}
                   as={'select'}
                   id="productCategory"
                   name="productCategory"
                   placeholder="Enter product category"
                   className={`w-full p-2 border-2 border-gray-300 border-dashed rounded-lg focus:ring-0 focus:outline-none resize-none bg-transparent`}
                 >
+                  <option defaultValue={'...'} >Choose Category</option>
                   {
-                    categories.length !== 0 ? categories.map((c) => <option value={c}>{c.nameAR}</option>) : <option value='...'>Create New Category</option>
+                    // catData.result.items.length !== 0 ? categories.map((c) => <option value={c}>{c.nameAR}</option>) : <option value='...'>Create New Category</option>
+                    categories.length !== 0 ? categories.map((c) => <option value={c.id}>{c.nameAR}</option>) : <option value='...'>Create New Category</option>
                   }
                   {/* <option value='...'>create new one</option> */}
                 </Field>
@@ -284,15 +310,16 @@ const FormContent = ({ currentStep }) => {
 
                 <Field
                   as={'select'}
-                  onChange={(e) => handleSelectChange(e.target.value)}
+                  // onChange={(e) => handleSelectChange(e.target.value)}
                   type="text"
                   id="productSubCategory"
                   name="productSubCategory"
                   placeholder="Enter product SubCategory"
                   className={`w-full p-2 border-2 border-gray-300 border-dashed rounded-lg focus:ring-0 focus:outline-none resize-none bg-transparent`}
                 >
+                  <option selected defaultValue='...'>Choose SubCategory</option>
                   {
-                    subCategories.length !== 0 ? subCategories.map((s) => <option value={s}>{s.nameAR}</option>) : <option value='...'>Create New Sub-Category</option>
+                    subCategories.length !== 0 ? subCategories.map((s) => <option value={s.id}>{s.nameAR}</option>) : <option value='...'>Create New Sub-Category</option>
                   }
                 </Field>
 
@@ -343,7 +370,7 @@ const FormContent = ({ currentStep }) => {
               <div className='flex flex-row items-center gap-3 justify-between'>
 
                 <Field
-                  onChange={(e) => handleSelectChange(e.target.value)}
+                  // onChange={(e) => handleSelectChange(e.target.value)}
                   as='select'
                   type="text"
                   id="ProductBrand"
@@ -351,8 +378,9 @@ const FormContent = ({ currentStep }) => {
                   placeholder="Enter product category"
                   className={`w-full p-2 border-2 border-gray-300 border-dashed rounded-lg focus:ring-0 focus:outline-none resize-none bg-transparent`}
                 >
+                  <option selected defaultValue='...'>Choose Brands</option>
                   {
-                    Brands.length !== 0 ? Brands.map((b) => <option value={b}>{b.nameAR}</option>) : <option value='...'>Create New Brand</option>
+                    Brands.length !== 0 ? Brands.map((b) => <option  value={b.id}>{b.nameAR}</option>) : <option value='...'>Create New Brand</option>
                   }
                 </Field>
 
@@ -400,4 +428,4 @@ const FormContent = ({ currentStep }) => {
   }
 };
 
-export default FormContent
+export default FormCreateProduct

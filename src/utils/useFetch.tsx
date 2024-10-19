@@ -15,7 +15,7 @@ const useFetch = (method,endpoint) => {
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    let api = 'http://ecomerce.runasp.net/api/' + endpoint;
+    let api = 'https://ecomerce.runasp.net/api/' + endpoint;
     let loginToken = localStorage.getItem('loginToken')
 
     let fetchData = async (body=null) => {
