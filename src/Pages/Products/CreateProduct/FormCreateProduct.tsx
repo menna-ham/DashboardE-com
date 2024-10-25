@@ -1,39 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage, useFormikContext } from "formik";
-import DragAndDropFileInput from "./DragAndDropFileInput.jsx";
+import DragAndDropFileInput from "./DragAndDropFileInput.tsx";
 import useFetch from "../../../utils/useFetch.tsx";
 import CreateOptionCom from "./CreateOptionCom.tsx";
 import { CgAddR } from "react-icons/cg";
 import ModalComponent from '../../../components/Modals/ModalComponent/ModalComponent.tsx';
-import { BrandInput, BrandsinitialValues, CategoryInitialValues, CategoryInput, SubCategoryInitialValues, SubCategoryInput } from '../../../utils/inputsFeilds.js';
+import { BrandInput, BrandsinitialValues, CategoryInitialValues, CategoryInput, SubCategoryInitialValues, SubCategoryInput } from '../../../utils/inputsFeilds';
+import { BrandItem, CategoryItem, SubCategoryItem } from 'utils/typesAndInterfaces.ts';
 
-// type CategoryItem = {
-//   nameAR: string;
-//   nameEN: string;
-//   photoPath: string;
-//   id: string;
-//   createBy: string;
-//   modifyBy: string | null;
-//   deletedBy: string | null;
-//   createAt: string;
-//   modifyAt: string | null;
-//   deletedAt: string | null;
-//   isActive: boolean;
-//   isDeleted: boolean;
-// };
 
-// type Result = {
-//   items: CategoryItem[];
-//   total: number;
-// };
 
-// type ApiResponse = {
-//   result: Result;
-//   isSuccess: boolean;
-//   message: string;
-// };
+interface FormCreateProductProps {
+  currentStep: number; // Current step of the form
+  values: any; // Form values (can be further specified)
+  subCategories: SubCategoryItem[]; // Array of subcategories
+  Brands: BrandItem[]; // Array of brands
+  categories: CategoryItem[]; // Array of categories
+}
 
-const FormCreateProduct = ({ currentStep,values, subCategories, Brands, categories }) => {
+
+const FormCreateProduct : React.FC<FormCreateProductProps>= ({ currentStep,values, subCategories, Brands, categories }) => {
 // const FormCreateProduct = ({ currentStep,values}) => {
   // const { data: catData, loading, error, fetchData } = useFetch('get', 'Category/GetAllCategory')
   // const { data: subData, loading: subLoad, error: SubErr, fetchData: fetSubCat } = useFetch('get', 'SubCategory/GetAllSubCategory')
@@ -203,7 +189,7 @@ const FormCreateProduct = ({ currentStep,values, subCategories, Brands, categori
 
           <DragAndDropFileInput
             label="Upload Product Image"
-            name="productImage" // Field for product image
+            name='productImage' // Field for product image
             galleryFieldName="productImage" // Field for product gallery
             accept=".jpg,.png,.gif,.svg"
             placeholderImage="https://via.placeholder.com/150" // Placeholder image for drag-and-drop area
@@ -214,9 +200,10 @@ const FormCreateProduct = ({ currentStep,values, subCategories, Brands, categori
             component="div"
             className="text-red-600 text-sm mt-1"
           />
+
           <DragAndDropFileInput
             label="Upload Product Gallery"
-            name="productGallery"
+            name='productGallery'
             galleryFieldName="productGallery"
             accept=".jpg,.png,.gif,.svg"
             placeholderImage="https://via.placeholder.com/150"

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import useFetch from '../../utils/useFetch.tsx'
+import useFetch from '../../utils/useFetch'
 import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
-import DataTable from '../../components/DataTable/DataTable.jsx';
+import DataTable from '../../components/DataTable/DataTable';
 import { MdDeleteForever, MdOutlineEditNote, MdViewInAr } from 'react-icons/md';
 import { BiSearch } from 'react-icons/bi';
 import ModalComponent from '../../components/Modals/ModalComponent/ModalComponent.tsx';
 import noBrand from '../../assets/black.png';
-import { BrandInput, BrandsinitialValues } from '../../utils/inputsFeilds.js';
+import { BrandInput, BrandsinitialValues } from '../../utils/inputsFeilds';
 import UpdateModal from '../../components/Modals/UpdateModal/UpdateModal.tsx';
 import Switch from "react-switch";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -14,21 +14,26 @@ import { Avatar } from '@mui/material';
 import Swal from 'sweetalert2';
 
 
+type ApiResponse = {
+  isSuccess: boolean|any;
+  message?: string;
+};
+
 
 const Brands = () => {
   let { data, loading, error, fetchData } = useFetch('get', 'Brand/GetAllBrand')
   let { data:activeRes, loading:activeLoad, error:activeError, fetchData:activeFun } = useFetch('put', 'Brand/ToggleActiveBrand')
-  let { data:deleteRes, loading:deleteLoad, error:deleteError, fetchData:deleteFun } = useFetch('delete', 'Brand/DeleteBrand')
+  let { data:deleteRes, loading:deleteLoad, error:deleteError, fetchData:deleteFun } = useFetch<ApiResponse>('delete', 'Brand/DeleteBrand')
   let [modalIsOpen, setIsOpen] = useState(false);
   let [IDUpdate, setIDUpdate] = useState('');
   let [Items, setItems] = useState({})
   let [updateModalIsOpen, setUpdateIsOpen] = useState(false);
   let [DeleteModalIsOpen, setDeleteIsOpen] = useState(false);
-  let [activeLoading, setActiveLoading] = useState({});
+  let [activeLoading, setActiveLoading] = useState<Record<string, boolean>>({});
   let [delID, setdelID] = useState({ID:''});
   let photoPath='http://ecomerce.runasp.net/'
 
-  let handleEdit = (row) => {
+  let handleEdit = (row: { ID: React.SetStateAction<string>; }) => {
     console.log('edit', row.ID);
     setUpdateIsOpen(true)
     setIDUpdate(row.ID)
@@ -90,7 +95,8 @@ const Brands = () => {
       // setActiveLoading(true);
       await activeFun(formData);
       console.log(activeRes)
-      setActiveLoading(activeLoad)
+      // setActiveLoading(activeLoad)
+      setActiveLoading(prev => ({ ...prev, [ID]: false }));
     }catch{
       console.log(activeError)
       setActiveLoading(prev => ({ ...prev, [ID]: false }));
@@ -143,7 +149,7 @@ const Brands = () => {
 
   if (data != null) {
     let { result }: any = data
-    const filteredData = result?.items.map(item => ({
+    const filteredData = result?.items.map((item:any) => ({
       ID: item.id,
       nameAR: item.nameAR,
       nameEN: item.nameEN,

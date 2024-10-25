@@ -1,9 +1,9 @@
 import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react'
-import useFetch from '../../utils/useFetch.tsx'
+import useFetch from '../../utils/useFetch'
 import { BiSearch } from 'react-icons/bi';
 import { Avatar } from '@mui/material';
-import DataTable from '../../components/DataTable/DataTable';
+import DataTable from '../../components/DataTable/DataTable.tsx';
 import { Link } from 'react-router-dom';
 
 const Products = () => {
@@ -31,7 +31,7 @@ const Products = () => {
   
   if (data != null) {
     let { result }: any = data
-    const filteredData = result?.items.map(item => ({
+    const filteredData = result?.items.map((item:any) => ({
       ID: item.id,
       nameAR: item.nameAR,
       nameEN: item.nameEN,

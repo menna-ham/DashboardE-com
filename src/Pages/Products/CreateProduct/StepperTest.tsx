@@ -13,11 +13,11 @@ import { TbLibraryPhoto, TbCategory2, TbReportMoney } from "react-icons/tb";
 import { MdOutlineSettings } from "react-icons/md";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage, useFormikContext } from "formik";
-import DragAndDropFileInput from "./DragAndDropFileInput";
 import useFetch from "../../../utils/useFetch.tsx";
 import CreateOptionCom from "./CreateOptionCom.tsx";
 import { CgAddR } from "react-icons/cg";
 import FormCreateProduct from "./FormCreateProduct.tsx";
+import { IconType } from "react-icons";
 
 // https://blog.logrocket.com/add-stepper-components-react-app/
 
@@ -55,16 +55,27 @@ const initialValues = {
   discount: "",
 };
 
-const StepperTest = ({
+interface Step {
+  label: string;
+  icon: IconType; // Icon component from react-icons
+}
+
+interface StepperTestProps {
+  steps: Step[];
+  initialValues: any; // Adjust according to your form values type
+  validationSchema: any; // Adjust according to your schema type (can use Yup schema)
+  onSubmit: (values: any) => void;
+  FormCreateProduct: (currentStep: number, values: any) => JSX.Element;
+}
+
+const StepperTest: React.FC<StepperTestProps> = ({
   steps,
   initialValues,
   validationSchema,
   onSubmit,
-  // fetchDataHooks, // Array of hooks that return fetch functions
   FormCreateProduct,
 }) => {
-  // const StepperTest = ()=>{  
-const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
 
   const handleNext = () => {
     setCurrentStep((prevStep) => prevStep + 1);
@@ -77,7 +88,8 @@ const [currentStep, setCurrentStep] = useState(0);
   const handleReset = () => {
     setCurrentStep(0);
   };
-  const getIconColor = (index) => {
+
+  const getIconColor = (index: number): string => {
     if (index === currentStep) {
       return "#F98A6D"; // Active step color
     } else if (index < currentStep) {
@@ -87,7 +99,7 @@ const [currentStep, setCurrentStep] = useState(0);
     }
   };
 
-  const renderStepIcon = (Icon, index) => {
+  const renderStepIcon = (Icon: IconType, index: number) => {
     return (
       <Box
         sx={{
@@ -109,7 +121,8 @@ const [currentStep, setCurrentStep] = useState(0);
       </Box>
     );
   };
-  const renderStepLabel = (step, index) => {
+
+  const renderStepLabel = (step: Step, index: number) => {
     return (
       <StepLabel
         sx={{

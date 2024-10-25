@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
-import { BrandInput, BrandsinitialValues, CategoryInitialValues, CategoryInput, SubCategoryInitialValues, SubCategoryInput } from '../../../utils/inputsFeilds';
+import { BrandInput, BrandsinitialValues, CategoryInitialValues, CategoryInput, SubCategoryInitialValues, SubCategoryInput } from '../../../utils/inputsFeilds.ts';
 import ModalComponent from '../../../components/Modals/ModalComponent/ModalComponent.tsx';
 
-const CreateOptionCom = ({type}) => {
+interface CreateOptionComProps{
+type:string;
+}
+
+const CreateOptionCom: React.FC<CreateOptionComProps> = ({type}) => {
     let [modalIsOpen, setIsOpen] = useState(false);
     console.log('create option', type)
 
