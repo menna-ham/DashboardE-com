@@ -131,8 +131,8 @@
 //       element: <SignUp />,
 //     },
 //   ]);
-  
-  
+
+
 //   return (
 //     // <Routes>
 //     //   <Route element={<PrivateRoutes />}>
@@ -155,7 +155,7 @@
 //     // </Routes>
 
 //     <RouterProvider router={router}/>
-  
+
 //   );
 // }
 
@@ -176,7 +176,7 @@ import { useEffect, useState } from 'react';
 import { jwtDecode } from "jwt-decode";
 import { Routes, Route } from 'react-router-dom';
 import PrivateRoutes from './utils/PrivateRoutes.tsx'
-import {PublicRoutes} from './utils/PrivateRoutes.tsx'
+import { PublicRoutes } from './utils/PrivateRoutes.tsx'
 import Products from './Pages/Products/Products.tsx';
 // import CreateProduct from './Pages/Products/CreateProduct/CreateProduct';
 import { useNavigate } from 'react-router-dom';
@@ -202,21 +202,21 @@ interface UserData {
 }
 
 function App() {
-  let [userData,setUserData]= useState<UserData | null>({})
+  let [userData, setUserData] = useState<UserData | null>({})
 
   let getUserToken = () => {
     let token: string | null = localStorage.getItem('loginToken');
-  
+
     if (token) {
       // Only decode if token is not null
       let data = jwtDecode(token);
-    
+
       // Transform 'aud' to be a string if it's an array
       const userData: UserData = {
         ...data,
         aud: Array.isArray(data.aud) ? data.aud[0] : data.aud, // Take the first element if it's an array
       };
-    
+
       setUserData(userData);
       console.log(userData);
     } else {
@@ -224,21 +224,21 @@ function App() {
     }
   };
 
- let LogOut = () => {
+  let LogOut = () => {
     const navigate = useNavigate(); // useNavigate hook for programmatic navigation
-  
+
     localStorage.removeItem('TokenGame');
     setUserData(null);
-    
+
     // Navigate to login page after logout
     navigate('/login');
   };
 
-  useEffect(()=>{
-    if(localStorage.getItem('loginToken')!=null){
+  useEffect(() => {
+    if (localStorage.getItem('loginToken') != null) {
       getUserToken()
     }
-  },[])
+  }, [])
 
 
   // const router = createBrowserRouter([
@@ -285,51 +285,65 @@ function App() {
   // ])
 
 
-const router = createBrowserRouter([
-  {
-    path: "/", 
-    element: <MainLayout LogOut={LogOut} />, // MainLayout wraps protected routes
-    children: [
-      {
-        path: "/", // Home page
-        element: <Home />,
-      },
-      {
-        path: "users", // Protected route
-        element: <PrivateRoutes element={<Users />} />,
-      },
-      {
-        path: "brands", // Protected route
-        element: <PrivateRoutes element={<Brands />} />,
-      },
-      {
-        path: "categories", // Protected route
-        element: <PrivateRoutes element={<Categories />} />,
-      },
-      {
-        path: "products", // Protected route with nested children
-        element: <PrivateRoutes element={<Products />} />,
-        children: [
-          {
-            path: "CreateProduct", // Protected nested route
-            element: <PrivateRoutes element={<CreateProduct />} />,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: "/login", // Public login page
-    element: <Login getUserToken={getUserToken} />,
-  },
-  {
-    path: "/signUp", // Public sign-up page
-    element: <SignUp />,
-  },
-]);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MainLayout LogOut={LogOut} />, // MainLayout wraps protected routes
+      children: [
+        {
+          path: "/", // Home page
+          element: <Home />,
+        },
+        {
+          path: "users", // Protected route
+          element: <PrivateRoutes element={<Users />} />,
+        },
+        {
+          path: "brands", // Protected route
+          element: <PrivateRoutes element={<Brands />} />,
+        },
+        {
+          path: "categories", // Protected route
+          element: <PrivateRoutes element={<Categories />} />,
+        },
+        // {
+        //   path: "products", // Protected route with nested children
+        //   element: <PrivateRoutes element={<Products />} />,
+        //   children: [
+        //     {
+        //       path: "CreateProduct", // Protected nested route
+        //       element: <PrivateRoutes element={<CreateProduct />} />,
+        //     },
+        //   ],
+        // },
+        {
+          path: "products",
+          element: <PrivateRoutes element={<Products />} />,
+          // children: [
+          //   {
+          //     path: "CreateProduct",
+          //     element: <CreateProduct />, // Removed PrivateRoutes wrapper
+          //   },
+          // ],
+        },
+        {
+          path: "products/CreateProduct", // Protected route
+          element: <PrivateRoutes element={<CreateProduct />} />,
+        },
+      ],
+    },
+    {
+      path: "/login", // Public login page
+      element: <Login getUserToken={getUserToken} />,
+    },
+    {
+      path: "/signUp", // Public sign-up page
+      element: <SignUp />,
+    },
+  ]);
 
-  
-  
+
+
   return (
     // <Routes>
     //   <Route element={<PrivateRoutes />}>
@@ -351,8 +365,8 @@ const router = createBrowserRouter([
 
     // </Routes>
 
-    <RouterProvider router={router}/>
-  
+    <RouterProvider router={router} />
+
   );
 }
 

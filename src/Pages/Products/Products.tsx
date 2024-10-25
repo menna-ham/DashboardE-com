@@ -66,6 +66,7 @@ const Products = () => {
           </div>
 
           <div> <Link to='CreateProduct' className='bg-blue-400 text-white p-2 rounded-lg'>Add New Product</Link></div>
+          <div> <Link to='/brands ' className='bg-blue-400 text-white p-2 rounded-lg'>Brands</Link></div>
 
         </div>
       </div>

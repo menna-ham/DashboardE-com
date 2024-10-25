@@ -22,7 +22,7 @@ const useFetch =<T>(method:string,endpoint:string) => {
     let api = 'https://ecomerce.runasp.net/api/' + endpoint;
     let loginToken = localStorage.getItem('loginToken')
 
-    let fetchData = async (body: FormData | null = null) => {
+    let fetchData = async (body: any | null = null) => {
         setLoading(true);
         setError(null);
 
@@ -39,13 +39,13 @@ const useFetch =<T>(method:string,endpoint:string) => {
                             // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                         }
                     });
-                    console.log(response)
+                    // console.log(response)
                     setData(response.data);
                     
                     break;
 
                 case 'post':
-                    console.log()
+                    console.log('posting api',body)
                     response = await axios.post(api,body,{
                         headers: {
                             Authorization: `Bearer ${loginToken}`,

@@ -1,7 +1,7 @@
-import { ErrorMessage, Field, Formik } from 'formik';
+import { ErrorMessage, Field, Formik , Form} from 'formik';
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { Form } from 'react-router-dom';
+// import { Form } from 'react-router-dom';
 import * as Yup from 'yup';
 import { AiOutlineClose } from 'react-icons/ai';
 import useFetch from '../../../utils/useFetch';
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { successfulAlert } from '../SuccessfulModal/SuccessfulModal';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { InputField } from 'utils/typesAndInterfaces.ts';
+import { GetResponse, InputField } from 'utils/typesAndInterfaces.ts';
 
 
 
@@ -53,7 +53,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
 }) => {
   const { data, loading, error, fetchData } = useFetch('post', path);
   const [success, setSuccess] = useState<boolean>(false);
-  console.log('modal called');
+  // console.log('modal called');
 
   const validationSchema = Yup.object().shape(
     inputs.reduce((schema, input) => {
@@ -72,33 +72,33 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
     setIsOpen(false);
   };
 
-  // const handleSubmit = async (values: any) => {
-  //   console.log('submitting')
-  //   console.log('submitting', values);
-  //   const formData = new FormData();
-  //   formData.append('nameAR', values.nameAR);
-  //   formData.append('nameEN', values.nameEN);
-  //   formData.append('formFile', values.formFile);
-  //   console.log(formData);
+  const handleSubmit = async (values: any) => {
+    console.log('submitting')
+    console.log('submitting', values);
+    const formData = new FormData();
+    formData.append('nameAR', values.nameAR);
+    formData.append('nameEN', values.nameEN);
+    formData.append('formFile', values.formFile);
+    console.log(formData);
 
-  //   try {
-  //     const res: any = await fetchData(formData);
-  //     console.log(res);
-  //     setSuccess(res?.isSuccess);
-  //     if (data) {
-  //       successfulAlert('brand added');
-  //       closeModal();
-  //     }
-  //   } catch (error) {
-  //     setSuccess(false);
-  //     console.log(success);
-  //   }
-  // };
+    try {
+      const res:any = await fetchData(formData);
+      console.log(res);
+      setSuccess(res?.isSuccess);
+      if (data) {
+        successfulAlert('brand added');
+        closeModal();
+      }
+    } catch (error) {
+      setSuccess(false);
+      console.log(success);
+    }
+  };
 
-  const handleSubmit = ()=>{
-    console.log('submitting test')
-  }
-  console.log('hello');
+  // const handleSubmit = ()=>{
+  //   console.log('submitting test')
+  // }
+  // console.log('hello'); 
 
   return (
     <>
@@ -124,6 +124,11 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
             validationSchema={validationSchema}
             onSubmit={handleSubmit} // Pass the actual submit function
             // onSubmit={()=>console.log('submitting')} // Pass the actual submit function
+            // onSubmit={(values, actions) => {
+            //   console.log({ values, actions });
+            //   alert(JSON.stringify(values, null, 2));
+            //   actions.setSubmitting(false);
+            // }}
           >
             {({ errors, touched, isSubmitting, values, setFieldValue }) => (
               <Form className='grid grid-cols-2 gap-2 my-2 items-center'>
