@@ -175,8 +175,12 @@ const CreateProduct: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchBrands());
-    dispatch(fetchSubcategories());
+    // dispatch(fetchSubcategories());
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchBrands());
+    // dispatch(fetchSubcategories());
+  }, []);
 
   useEffect(() => {
     if (catData?.result) setCategories(catData.result.items);
